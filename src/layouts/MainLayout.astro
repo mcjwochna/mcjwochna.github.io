@@ -24,7 +24,7 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
             Maciej <span class="text-accent-primary">Wochna</span>
         </a>
 
-        <button id="mobile-menu-btn" class="lg:hidden relative z-[110] p-2 text-current" aria-label="Toggle Menu">
+        <button id="mobile-menu-btn" class="lg:hidden relative z-[110] p-2 text-current focus:outline-none" aria-label="Toggle Menu">
             <div id="hamburger-icon" class="w-6 h-0.5 bg-current transition-all duration-300 relative before:content-[''] before:absolute before:w-6 before:h-0.5 before:bg-current before:-translate-y-2 before:transition-all after:content-[''] after:absolute after:w-6 after:h-0.5 after:bg-current after:translate-y-2 after:transition-all"></div>
         </button>
 
@@ -52,12 +52,11 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
         .nav-link.active { color: #10b981 !important; }
         .scrolled-light { background-color: #000000 !important; color: #ffffff !important; }
         .dark .scrolled-dark { background-color: #ffffff !important; color: #000000 !important; }
-        
-        /* Hamburger Animation */
+        #navbar.scrolled-light .nav-link:not(.active) { color: #ffffff; }
+        #navbar.scrolled-dark .nav-link:not(.active) { color: #000000; }
         .menu-open #hamburger-icon { background: transparent; }
-        .menu-open #hamburger-icon::before { transform: rotate(45deg) translate(0, 0); }
-        .menu-open #hamburger-icon::after { transform: rotate(-45deg) translate(0, 0); }
-        .menu-open #hamburger-icon::before, .menu-open #hamburger-icon::after { top: 0; }
+        .menu-open #hamburger-icon::before { transform: rotate(45deg) translate(0, 8px); }
+        .menu-open #hamburger-icon::after { transform: rotate(-45deg) translate(0, -8px); }
         body.menu-open { overflow: hidden; }
     </style>
 
@@ -67,30 +66,40 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
         const navContainer = document.getElementById('nav-container');
         const navLinks = document.querySelectorAll('.nav-link');
         const themeToggleBtn = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
         const sections = document.querySelectorAll('section');
+
+        function updateIcons() {
+            if (document.documentElement.classList.contains('dark')) {
+                lightIcon?.classList.remove('hidden');
+                darkIcon?.classList.add('hidden');
+            } else {
+                darkIcon?.classList.remove('hidden');
+                lightIcon?.classList.add('hidden');
+            }
+        }
 
         function handleScroll() {
             const scrollY = window.scrollY;
             const isDark = document.documentElement.classList.contains('dark');
-            
             if (scrollY > 50) {
-                navbar.classList.add(isDark ? 'scrolled-dark' : 'scrolled-light');
-                navbar.classList.remove('bg-transparent', 'text-white', 'py-6');
-                navbar.classList.add('py-4', 'shadow-xl');
+                navbar?.classList.add(isDark ? 'scrolled-dark' : 'scrolled-light');
+                navbar?.classList.remove('bg-transparent', 'text-white', 'py-6');
+                navbar?.classList.add('py-4', 'shadow-xl');
             } else {
-                navbar.classList.remove('scrolled-dark', 'scrolled-light', 'py-4', 'shadow-xl');
-                navbar.classList.add('bg-transparent', 'text-white', 'py-6');
+                navbar?.classList.remove('scrolled-dark', 'scrolled-light', 'py-4', 'shadow-xl');
+                navbar?.classList.add('bg-transparent', 'text-white', 'py-6');
             }
 
-            // Scroll Spy
             let current = "";
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (scrollY >= sectionTop - 200) current = section.getAttribute("id");
+                if (scrollY >= sectionTop - 250) current = section.getAttribute("id") || "";
             });
             navLinks.forEach(link => {
                 link.classList.remove("active");
-                if (link.getAttribute("href").includes(current)) link.classList.add("active");
+                if (link.getAttribute("href") === `#${current}`) link.classList.add("active");
             });
         }
 
@@ -105,13 +114,15 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
             navContainer?.classList.add('translate-x-full');
         }));
 
+        updateIcons();
+        handleScroll();
         window.addEventListener('scroll', handleScroll);
         themeToggleBtn?.addEventListener('click', () => {
             document.documentElement.classList.toggle('dark');
             localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            updateIcons();
             handleScroll();
         });
-        handleScroll();
     </script>
 </body>
 </html>

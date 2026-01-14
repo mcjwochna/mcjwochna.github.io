@@ -1,51 +1,53 @@
 ---
 // src/components/HomeSlider.astro
 ---
-<section id="home" class="relative h-screen w-full overflow-hidden bg-black text-white">
+<section id="home" class="relative h-screen w-full overflow-hidden bg-[#f4f4f4] dark:bg-[#0a0a0a] transition-colors duration-300">
     <div id="slider-track" class="h-full w-full relative">
         
-        <div class="slide absolute inset-0 opacity-100 transition-opacity duration-1000 z-10" data-index="0">
-            <div class="absolute inset-0 bg-cover bg-center lg:bg-right lg:w-[60%] lg:left-[40%] transition-all duration-700" 
+        <div class="slide absolute inset-0 opacity-100 transition-opacity duration-1000 z-10" data-active>
+            <div class="absolute inset-0 bg-cover bg-center lg:bg-right lg:w-[60%] lg:left-[40%] transition-all duration-700 lg:[clip-path:polygon(15%_0,100%_0,100%_100%,0%_100%)]" 
                  style="background-image: url('/profile.jpg');">
-                <div class="absolute inset-0 bg-black/60 lg:bg-black/20 transition-all"></div>
+                <div class="absolute inset-0 bg-black/50 lg:bg-black/10 transition-all"></div>
             </div>
             
-            <div class="relative h-full flex flex-col justify-center items-center lg:items-start px-6 lg:pl-24 z-30 lg:w-[55%] text-center lg:text-left">
-                <span class="text-accent-primary font-bold tracking-[4px] uppercase mb-4 text-sm lg:text-base animate-fadeInUp">
-                    Hi! I'm Maciej
-                </span>
-                <h1 class="text-4xl lg:text-7xl font-black mb-8 leading-tight uppercase animate-fadeInUp delay-100">
-                    Data Engineer <br class="hidden lg:block"> & BI Developer
-                </h1>
-                
-                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto animate-fadeInUp delay-200">
-                    <a href="#contact" class="px-10 py-4 bg-accent-primary text-white rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-transform text-center">
+            <div class="relative h-full flex flex-col justify-end lg:justify-center items-center lg:items-start px-6 lg:pl-24 pb-24 lg:pb-0 z-30 lg:w-[55%] text-center lg:text-left">
+                <div class="mb-8 lg:mb-0">
+                    <span class="text-accent-primary font-bold tracking-[4px] uppercase mb-4 text-xs lg:text-base block">Hi! I'm Maciej</span>
+                    <h1 class="text-4xl lg:text-6xl font-black mb-8 leading-tight uppercase text-white lg:text-gray-900 lg:dark:text-white drop-shadow-lg lg:drop-shadow-none tracking-tighter">
+                        Data Engineer <br> & BI Developer
+                    </h1>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto min-h-[140px] lg:min-h-0">
+                    <a href="#contact" class="px-10 py-4 bg-accent-primary text-white rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-transform shadow-xl text-center">
                         Hire Me
                     </a>
-                    <a href="/cv-maciej-wochna.pdf" download class="px-10 py-4 border-2 border-accent-primary text-accent-primary rounded-full font-bold uppercase tracking-widest hover:bg-accent-primary hover:text-white transition-all text-center">
+                    <a href="/cv-maciej-wochna.pdf" download class="px-10 py-4 border-2 border-accent-primary text-accent-primary rounded-full font-bold uppercase tracking-widest hover:bg-accent-primary hover:text-white transition-all text-center bg-white/10 lg:bg-transparent">
                         Download CV
                     </a>
                 </div>
             </div>
         </div>
 
-        <div class="slide absolute inset-0 opacity-0 transition-opacity duration-1000 z-10 pointer-events-none" data-index="1">
-            <div class="absolute inset-0 bg-cover bg-center lg:bg-right lg:w-[60%] lg:left-[40%]" 
+        <div class="slide absolute inset-0 opacity-0 transition-opacity duration-1000 z-10 pointer-events-none">
+            <div class="absolute inset-0 bg-cover bg-center lg:bg-right lg:w-[60%] lg:left-[40%] lg:[clip-path:polygon(15%_0,100%_0,100%_100%,0%_100%)]" 
                  style="background-image: url('/profile2.jpg');">
-                <div class="absolute inset-0 bg-black/60 lg:bg-black/20"></div>
+                <div class="absolute inset-0 bg-black/50 lg:bg-black/10 transition-all"></div>
             </div>
             
-            <div class="relative h-full flex flex-col justify-center items-center lg:items-start px-6 lg:pl-24 z-30 lg:w-[55%] text-center lg:text-left">
-                <span class="text-accent-primary font-bold tracking-[4px] uppercase mb-4 text-sm">Analytics & Logic</span>
-                <h1 class="text-4xl lg:text-6xl font-black mb-8 leading-tight uppercase">
-                    I transform data and <br class="hidden lg:block"> create meaningful reports.
-                </h1>
-                
-                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                    <a href="#contact" class="px-10 py-4 bg-accent-primary text-white rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-transform text-center">
+            <div class="relative h-full flex flex-col justify-end lg:justify-center items-center lg:items-start px-6 lg:pl-24 pb-24 lg:pb-0 z-30 lg:w-[55%] text-center lg:text-left">
+                <div class="mb-8 lg:mb-0">
+                    <span class="text-accent-primary font-bold tracking-[4px] uppercase mb-4 text-xs lg:text-base block">Analytics & Logic</span>
+                    <h1 class="text-4xl lg:text-6xl font-black mb-8 leading-tight uppercase text-white lg:text-gray-900 lg:dark:text-white drop-shadow-lg lg:drop-shadow-none tracking-tighter">
+                        I transform data and <br> create meaningful reports.
+                    </h1>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto min-h-[140px] lg:min-h-0">
+                    <a href="#contact" class="px-10 py-4 bg-accent-primary text-white rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-transform shadow-xl text-center">
                         Hire Me
                     </a>
-                    <a href="/cv-maciej-wochna.pdf" download class="px-10 py-4 border-2 border-accent-primary text-accent-primary rounded-full font-bold uppercase tracking-widest hover:bg-accent-primary hover:text-white transition-all text-center">
+                    <a href="/cv-maciej-wochna.pdf" download class="px-10 py-4 border-2 border-accent-primary text-accent-primary rounded-full font-bold uppercase tracking-widest hover:bg-accent-primary hover:text-white transition-all text-center bg-white/10 lg:bg-transparent">
                         Download CV
                     </a>
                 </div>
@@ -53,33 +55,32 @@
         </div>
     </div>
 
-    <button id="prev-slide" class="absolute left-4 top-1/2 -translate-y-1/2 z-50 w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center border border-white/30 text-white hover:bg-accent-primary hover:border-accent-primary transition-all rounded-full">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 lg:w-6 lg:h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+    <button id="prev-slide" class="absolute left-4 top-1/2 -translate-y-1/2 z-50 w-12 h-12 flex items-center justify-center border border-white/30 text-white hover:bg-accent-primary rounded-full transition-all" aria-label="Previous Slide">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
     </button>
-    <button id="next-slide" class="absolute right-4 top-1/2 -translate-y-1/2 z-50 w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center border border-white/30 text-white hover:bg-accent-primary hover:border-accent-primary transition-all rounded-full">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 lg:w-6 lg:h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+    <button id="next-slide" class="absolute right-4 top-1/2 -translate-y-1/2 z-50 w-12 h-12 flex items-center justify-center border border-white/30 text-white hover:bg-accent-primary rounded-full transition-all" aria-label="Next Slide">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
     </button>
 </section>
 
 <script>
     const slides = document.querySelectorAll('.slide');
-    const prevBtn = document.getElementById('prev-slide');
     const nextBtn = document.getElementById('next-slide');
+    const prevBtn = document.getElementById('prev-slide');
     let currentSlide = 0;
 
-    function showSlide(index) {
-        slides.forEach(s => {
-            s.classList.replace('opacity-100', 'opacity-0');
-            s.classList.add('pointer-events-none');
+    function updateSlider(newIndex) {
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('opacity-100', i === newIndex);
+            slide.classList.toggle('opacity-0', i !== newIndex);
+            slide.classList.toggle('pointer-events-none', i !== newIndex);
         });
-        slides[index].classList.replace('opacity-0', 'opacity-100');
-        slides[index].classList.remove('pointer-events-none');
-        currentSlide = index;
+        currentSlide = newIndex;
     }
 
-    nextBtn?.addEventListener('click', () => showSlide((currentSlide + 1) % slides.length));
-    prevBtn?.addEventListener('click', () => showSlide((currentSlide - 1 + slides.length) % slides.length));
+    nextBtn?.addEventListener('click', () => updateSlider((currentSlide + 1) % slides.length));
+    prevBtn?.addEventListener('click', () => updateSlider((currentSlide - 1 + slides.length) % slides.length));
     
-    // Auto-swipe
-    setInterval(() => showSlide((currentSlide + 1) % slides.length), 6000);
+    // Auto-przewijanie co 7 sekund
+    setInterval(() => updateSlider((currentSlide + 1) % slides.length), 7000);
 </script>
