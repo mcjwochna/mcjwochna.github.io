@@ -37,11 +37,21 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
                     >
                     </div>
 
-                <nav class="hidden lg:flex flex-col gap-3">
-                    <a href="/#work" class="text-text-secondary hover:text-white transition-colors text-sm uppercase tracking-wider">Projekty</a>
-                    <a href="/#philosophy" class="text-text-secondary hover:text-white transition-colors text-sm uppercase tracking-wider">Filozofia</a>
-                    <a href="/#contact" class="text-text-secondary hover:text-white transition-colors text-sm uppercase tracking-wider">Kontakt</a>
+                <nav class="hidden lg:flex flex-col gap-4 mt-12">
+                    <a href="#work" data-target="work" class="nav-link text-text-secondary hover:text-white transition-all duration-300 text-sm uppercase tracking-widest border-l-2 border-transparent pl-4 hover:pl-8 flex items-center group">
+                        <span class="group-hover:text-accent-primary transition-colors">01.</span> 
+                        <span class="ml-4">Projekty</span>
+                    </a>
+                    <a href="#philosophy" data-target="philosophy" class="nav-link text-text-secondary hover:text-white transition-all duration-300 text-sm uppercase tracking-widest border-l-2 border-transparent pl-4 hover:pl-8 flex items-center group">
+                        <span class="group-hover:text-accent-primary transition-colors">02.</span> 
+                        <span class="ml-4">Filozofia</span>
+                    </a>
+                    <a href="#contact" data-target="contact" class="nav-link text-text-secondary hover:text-white transition-all duration-300 text-sm uppercase tracking-widest border-l-2 border-transparent pl-4 hover:pl-8 flex items-center group">
+                        <span class="group-hover:text-accent-primary transition-colors">03.</span> 
+                        <span class="ml-4">Kontakt</span>
+                    </a>
                 </nav>
+
             </div>
 
             <div class="text-text-secondary text-sm hidden lg:block">
@@ -54,5 +64,96 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
         </main>
 
     </div>
+
+<style>
+    /* STYL AKTYWNEGO LINKU */
+    /* Gdy JS doda klasę .active, link zmieni wygląd */
+    .nav-link.active {
+        color: #fff;
+        border-left-color: #10b981; /* Zielony pasek po lewej */
+        padding-left: 2rem; /* Większe wcięcie */
+        background: linear-gradient(90deg, rgba(16,185,129,0.05) 0%, transparent 100%); /* Delikatne tło */
+    }
+    
+    /* ANIMACJA WEJŚCIA (Fade In Up) */
+    /* Stan początkowy: niewidoczny i przesunięty w dół */
+    .fade-in-section {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 1s ease-out, transform 1s ease-out; /* Bardzo płynne przejście (1s) */
+        will-change: opacity, transform; /* Optymalizacja wydajności przeglądarki */
+    }
+    
+    /* Stan końcowy: widoczny i na swoim miejscu */
+    .fade-in-section.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<script>
+    // Czekamy na załadowanie całej strony
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        // --- CZĘŚĆ 1: ACTIVE NAVIGATION (Podświetlanie menu) ---
+        
+        // Konfiguracja obserwatora
+        const navOptions = {
+            root: null,
+            rootMargin: '-20% 0px -60% 0px', // Aktywuj, gdy sekcja jest w środku ekranu (nie na samym dole/górze)
+            threshold: 0 // Wystarczy, że 1 piksel wejdzie w strefę rootMargin
+        };
+
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // 1. Usuń klasę 'active' ze wszystkich linków
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    
+                    // 2. Znajdź link pasujący do aktualnej sekcji
+                    const id = entry.target.getAttribute('id');
+                    const activeLink = document.querySelector(`.nav-link[data-target="${id}"]`);
+                    
+                    // 3. Dodaj klasę 'active'
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                    }
+                }
+            });
+        }, navOptions);
+
+        // Uruchom obserwatora dla sekcji: Work, Philosophy, Contact
+        document.querySelectorAll('section[id]').forEach((section) => {
+            navObserver.observe(section);
+        });
+
+
+        // --- CZĘŚĆ 2: KINOWE WEJŚCIE (Fade In Animations) ---
+        
+        const fadeOptions = {
+            threshold: 0.1 // Uruchom animację, gdy 10% elementu pojawi się na ekranie
+        };
+
+        const fadeObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Dodaj klasę, która uruchamia CSS transition
+                    entry.target.classList.add('is-visible');
+                    // Przestań obserwować (animacja ma się wykonać tylko raz)
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, fadeOptions);
+
+        // Znajdź wszystkie główne elementy wewnątrz sekcji i nadaj im klasę startową
+        document.querySelectorAll('section > *').forEach((el) => {
+            el.classList.add('fade-in-section'); // Ustawiamy opacity: 0
+            fadeObserver.observe(el); // Zaczynamy patrzeć
+        });
+    });
+</script>
+
 </body>
 </html>
