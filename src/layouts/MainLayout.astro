@@ -9,145 +9,109 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
-    
     <script is:inline>
         const theme = (() => {
-            if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-                return localStorage.getItem('theme');
-            }
+            if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) return localStorage.getItem('theme');
             return 'light';
         })();
-        
-        if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
+        document.documentElement.classList.toggle('dark', theme === 'dark');
     </script>
 </head>
 <body class="bg-bg-primary text-text-primary antialiased">
     
-    <nav id="navbar" class="fixed top-0 w-full z-[100] transition-all duration-500 py-6 px-6 lg:px-12 flex justify-between items-center bg-transparent text-white">
-        
+    <nav id="navbar" class="fixed top-0 w-full z-[100] transition-all duration-500 py-4 lg:py-6 px-6 lg:px-12 flex justify-between items-center bg-transparent text-white">
         <a href="#home" id="nav-logo" class="text-xl lg:text-2xl font-black tracking-tighter relative z-[110] uppercase transition-colors duration-500">
             Maciej <span class="text-accent-primary">Wochna</span>
         </a>
 
-        <div class="hidden lg:flex items-center gap-8">
-            <ul id="nav-menu" class="flex gap-8 text-sm font-bold tracking-widest uppercase">
+        <button id="mobile-menu-btn" class="lg:hidden relative z-[110] p-2 text-current" aria-label="Toggle Menu">
+            <div id="hamburger-icon" class="w-6 h-0.5 bg-current transition-all duration-300 relative before:content-[''] before:absolute before:w-6 before:h-0.5 before:bg-current before:-translate-y-2 before:transition-all after:content-[''] after:absolute after:w-6 after:h-0.5 after:bg-current after:translate-y-2 after:transition-all"></div>
+        </button>
+
+        <div id="nav-container" class="fixed inset-0 bg-black/95 lg:bg-transparent lg:static lg:flex items-center gap-8 translate-x-full lg:translate-x-0 transition-transform duration-500 z-[105]">
+            <ul id="nav-menu" class="flex flex-col lg:flex-row h-full lg:h-auto items-center justify-center gap-10 lg:gap-8 text-2xl lg:text-sm font-bold tracking-widest uppercase text-white lg:text-inherit">
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#services" class="nav-link">Services</a></li>
                 <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li class="lg:ml-4">
+                    <button id="theme-toggle" class="p-3 rounded-full border border-white/20 lg:border-transparent transition-colors">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-6 h-6 lg:w-5 lg:h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-6 h-6 lg:w-5 lg:h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path></svg>
+                    </button>
+                </li>
             </ul>
-
-            <button id="theme-toggle" class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors" aria-label="Toggle Theme">
-                <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-                </svg>
-                <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path>
-                </svg>
-            </button>
         </div>
     </nav>
 
     <slot />
 
     <style is:global>
-        .nav-link {
-            transition: color 0.3s ease;
-        }
+        .nav-link { transition: color 0.3s ease; }
+        .nav-link.active { color: #10b981 !important; }
+        .scrolled-light { background-color: #000000 !important; color: #ffffff !important; }
+        .dark .scrolled-dark { background-color: #ffffff !important; color: #000000 !important; }
         
-        .nav-link.active {
-            color: #10b981 !important;
-        }
-
-        /* LOGIKA KOLORÓW PASKA (Light Mode) */
-        /* Gdy navbar jest "stały" (nie na HOME) */
-        .scrolled-light {
-            background-color: #000000 !important; /* Czarny pasek w jasnym motywie */
-            color: #ffffff !important;
-        }
-
-        /* LOGIKA KOLORÓW PASKA (Dark Mode) */
-        .dark .scrolled-dark {
-            background-color: #ffffff !important; /* Biały pasek w ciemnym motywie */
-            color: #000000 !important;
-        }
-
-        /* Ustawienie kolorów linków dla stanu "Scrolled" */
-        #navbar.scrolled-light .nav-link:not(.active) { color: #ffffff; }
-        #navbar.scrolled-dark .nav-link:not(.active) { color: #000000; }
+        /* Hamburger Animation */
+        .menu-open #hamburger-icon { background: transparent; }
+        .menu-open #hamburger-icon::before { transform: rotate(45deg) translate(0, 0); }
+        .menu-open #hamburger-icon::after { transform: rotate(-45deg) translate(0, 0); }
+        .menu-open #hamburger-icon::before, .menu-open #hamburger-icon::after { top: 0; }
+        body.menu-open { overflow: hidden; }
     </style>
 
     <script>
         const navbar = document.getElementById('navbar');
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const darkIcon = document.getElementById('theme-toggle-dark-icon');
-        const lightIcon = document.getElementById('theme-toggle-light-icon');
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const navContainer = document.getElementById('nav-container');
         const navLinks = document.querySelectorAll('.nav-link');
+        const themeToggleBtn = document.getElementById('theme-toggle');
         const sections = document.querySelectorAll('section');
-
-        function updateIcons() {
-            if (document.documentElement.classList.contains('dark')) {
-                lightIcon?.classList.remove('hidden');
-                darkIcon?.classList.add('hidden');
-            } else {
-                darkIcon?.classList.remove('hidden');
-                lightIcon?.classList.add('hidden');
-            }
-        }
 
         function handleScroll() {
             const scrollY = window.scrollY;
             const isDark = document.documentElement.classList.contains('dark');
-
+            
             if (scrollY > 50) {
-                navbar?.classList.remove('bg-transparent', 'py-6', 'text-white');
-                navbar?.classList.add('shadow-2xl', 'py-4');
-                
-                if (isDark) {
-                    navbar?.classList.add('scrolled-dark');
-                    navbar?.classList.remove('scrolled-light');
-                } else {
-                    navbar?.classList.add('scrolled-light');
-                    navbar?.classList.remove('scrolled-dark');
-                }
+                navbar.classList.add(isDark ? 'scrolled-dark' : 'scrolled-light');
+                navbar.classList.remove('bg-transparent', 'text-white', 'py-6');
+                navbar.classList.add('py-4', 'shadow-xl');
             } else {
-                navbar?.classList.remove('scrolled-dark', 'scrolled-light', 'shadow-2xl', 'py-4');
-                navbar?.classList.add('bg-transparent', 'py-6', 'text-white');
+                navbar.classList.remove('scrolled-dark', 'scrolled-light', 'py-4', 'shadow-xl');
+                navbar.classList.add('bg-transparent', 'text-white', 'py-6');
             }
 
             // Scroll Spy
             let current = "";
-            sections.forEach((section) => {
+            sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (scrollY >= sectionTop - 150) {
-                    current = section.getAttribute("id") || "";
-                }
+                if (scrollY >= sectionTop - 200) current = section.getAttribute("id");
             });
-
-            navLinks.forEach((link) => {
+            navLinks.forEach(link => {
                 link.classList.remove("active");
-                if (link.getAttribute("href") === `#${current}`) {
-                    link.classList.add("active");
-                }
+                if (link.getAttribute("href").includes(current)) link.classList.add("active");
             });
         }
 
-        updateIcons();
-        handleScroll();
+        mobileBtn?.addEventListener('click', () => {
+            document.body.classList.toggle('menu-open');
+            navContainer?.classList.toggle('translate-x-full');
+            navContainer?.classList.toggle('translate-x-0');
+        });
+
+        navLinks.forEach(link => link.addEventListener('click', () => {
+            document.body.classList.remove('menu-open');
+            navContainer?.classList.add('translate-x-full');
+        }));
 
         window.addEventListener('scroll', handleScroll);
-        
         themeToggleBtn?.addEventListener('click', () => {
             document.documentElement.classList.toggle('dark');
             localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-            updateIcons();
             handleScroll();
         });
+        handleScroll();
     </script>
 </body>
 </html>

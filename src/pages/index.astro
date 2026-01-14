@@ -7,61 +7,82 @@ import Services from '../components/Services.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Contact from '../components/Contact.astro';
 
-// Pobranie projektów
 const projects = await getCollection('work');
 ---
 
-<MainLayout title="Maciej Wochna | Senior Data Engineer">
+<MainLayout title="Maciej Wochna | Data Engineer">
     
-    <HomeSlider />
+    <main>
+        <HomeSlider />
 
-    <section id="about" class="bg-bg-primary transition-colors duration-300">
-        <div class="max-w-[1400px] mx-auto px-6 pt-24">
-            <div class="mb-12 border-l-4 border-accent-primary pl-6">
-                <span class="text-accent-primary font-mono text-sm tracking-[4px] uppercase block mb-2">01. About</span>
-                <h2 class="text-4xl lg:text-5xl font-black uppercase text-gray-900 dark:text-white">About Me</h2>
+        <section id="about" class="bg-bg-primary transition-colors duration-300">
+            <div class="max-w-[1400px] mx-auto px-6 py-24 lg:pt-32">
+                <div class="mb-12 border-l-4 border-accent-primary pl-6">
+                    <span class="text-accent-primary font-mono text-sm tracking-[4px] uppercase block mb-2">01. About</span>
+                    <h2 class="text-3xl md:text-5xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">
+                        About Me
+                    </h2>
+                </div>
+                <Philosophy />
             </div>
-            <Philosophy />
-        </div>
-    </section>
+        </section>
 
-    <Services />
+        <Services />
 
-    <section id="portfolio" class="bg-bg-primary flex flex-col">
-        <div class="max-w-[1500px] mx-auto px-6 h-full w-full flex flex-col pt-24 pb-12">
-            
-            <div class="mb-12 border-l-4 border-accent-primary pl-6">
-                <span class="text-accent-primary font-mono text-sm tracking-[4px] uppercase block mb-2">02. Portfolio</span>
-                <h2 class="text-4xl lg:text-6xl font-black uppercase text-gray-900 dark:text-white leading-none">Portfolio</h2>
-            </div>
+        <section id="portfolio" class="bg-bg-primary transition-colors duration-300">
+            <div class="max-w-[1500px] mx-auto px-6 py-24 lg:pt-32 flex flex-col h-full w-full">
+                <div class="mb-12 border-l-4 border-accent-primary pl-6">
+                    <span class="text-accent-primary font-mono text-sm tracking-[4px] uppercase block mb-2">02. Portfolio</span>
+                    <h2 class="text-3xl md:text-5xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">
+                        Portfolio
+                    </h2>
+                </div>
 
-            <div class="flex-grow flex items-center justify-center">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-16 w-full items-stretch">
-                    {projects.slice(0, 3).map(project => (
-                        <div class="w-full flex">
-                            <ProjectCard project={project} />
-                        </div>
-                    ))}
+                <div class="flex-grow flex items-center justify-center">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-16 w-full">
+                        {projects.slice(0, 3).map(project => (
+                            <div class="w-full">
+                                <ProjectCard project={project} />
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <div id="contact" class="bg-bg-secondary">
         <Contact />
-    </div>
+    </main>
 
 </MainLayout>
 
-<style>
-    /* Zapewnienie, że sekcje nie nakładają się na siebie */
+<style is:global>
+    /* BAZA DLA SEKCI - RESPONSYWNA */
     section {
-        height: calc(100vh - 80px);
+        min-height: 100vh; /* Na mobile sekcja rośnie z treścią */
         width: 100%;
         position: relative;
-        overflow: hidden;
+        display: flex;
+        flex-direction: column;
     }
-    #home {
-        height: 100vh;
+
+    /* DESKTOP: Wymuszamy dociąganie i stałą wysokość tylko jeśli ekran jest duży */
+    @media (min-width: 1024px) {
+        section {
+            height: calc(100vh - 80px);
+            overflow: hidden;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+
+        /* Home zajmuje zawsze pełny ekran */
+        #home {
+            height: 100vh !important;
+        }
+
+        /* Sekcje z dużym kontentem mogą być wyższe jeśli trzeba */
+        #portfolio, #about, #contact {
+            height: auto;
+            min-height: 100vh;
+        }
     }
 </style>

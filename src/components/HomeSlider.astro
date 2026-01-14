@@ -1,54 +1,63 @@
 ---
-// Komponent obsługujący główny slider w stylu CLYDE
+// src/components/HomeSlider.astro
 ---
-<section id="home" class="relative h-screen w-full overflow-hidden bg-[#f4f4f4] dark:bg-[#0a0a0a] text-text-primary">
-    
+<section id="home" class="relative h-screen w-full overflow-hidden bg-black text-white">
     <div id="slider-track" class="h-full w-full relative">
         
-        <div class="slide absolute inset-0 opacity-100 transition-opacity duration-1000 ease-in-out z-10" data-index="0">
-            <div class="absolute left-0 top-0 h-full w-full lg:w-[65%] flex flex-col justify-center px-6 lg:pl-24 z-30 pointer-events-none">
-                <div class="pointer-events-auto">
-                    <span class="text-accent-primary font-bold tracking-[4px] uppercase mb-4 animate-fadeInUp block">Hi! I'm Maciej</span>
-                    <h1 class="text-4xl lg:text-6xl font-extrabold mb-8 leading-tight animate-fadeInUp delay-100 text-gray-900 dark:text-white drop-shadow-md">
-                        Data Engineer <br> & BI Developer
-                    </h1>
-                    <div class="flex flex-wrap gap-4 mt-8 animate-fadeInUp delay-200">
-                        <a href="#contact" class="px-8 py-4 bg-accent-primary text-white rounded-full font-bold tracking-widest uppercase hover:scale-105 transition-transform shadow-lg shadow-accent-primary/30">Hire Me</a>
-                        <a href="/cv-maciej-wochna.pdf" download class="px-8 py-4 border-2 border-accent-primary text-accent-primary rounded-full font-bold tracking-widest uppercase hover:bg-accent-primary hover:text-white transition-colors">Download CV</a>
-                    </div>
-                </div>
+        <div class="slide absolute inset-0 opacity-100 transition-opacity duration-1000 z-10" data-index="0">
+            <div class="absolute inset-0 bg-cover bg-center lg:bg-right lg:w-[60%] lg:left-[40%] transition-all duration-700" 
+                 style="background-image: url('/profile.jpg');">
+                <div class="absolute inset-0 bg-black/60 lg:bg-black/20 transition-all"></div>
             </div>
-            <div class="absolute right-0 top-0 h-full w-full lg:w-[60%] bg-cover bg-center z-10" 
-                 style="background-image: url('/profile.jpg'); clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);">
-                 <div class="absolute inset-0 bg-black/10 dark:bg-black/40"></div>
+            
+            <div class="relative h-full flex flex-col justify-center items-center lg:items-start px-6 lg:pl-24 z-30 lg:w-[55%] text-center lg:text-left">
+                <span class="text-accent-primary font-bold tracking-[4px] uppercase mb-4 text-sm lg:text-base animate-fadeInUp">
+                    Hi! I'm Maciej
+                </span>
+                <h1 class="text-4xl lg:text-7xl font-black mb-8 leading-tight uppercase animate-fadeInUp delay-100">
+                    Data Engineer <br class="hidden lg:block"> & BI Developer
+                </h1>
+                
+                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto animate-fadeInUp delay-200">
+                    <a href="#contact" class="px-10 py-4 bg-accent-primary text-white rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-transform text-center">
+                        Hire Me
+                    </a>
+                    <a href="/cv-maciej-wochna.pdf" download class="px-10 py-4 border-2 border-accent-primary text-accent-primary rounded-full font-bold uppercase tracking-widest hover:bg-accent-primary hover:text-white transition-all text-center">
+                        Download CV
+                    </a>
+                </div>
             </div>
         </div>
 
-        <div class="slide absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out z-10 pointer-events-none" data-index="1">
-            <div class="absolute left-0 top-0 h-full w-full lg:w-[65%] flex flex-col justify-center px-6 lg:pl-24 z-30 pointer-events-none">
-                <div class="pointer-events-auto">
-                    <span class="text-accent-primary font-bold tracking-[4px] uppercase mb-4 block">Analytics & Logic</span>
-                    <h1 class="text-4xl lg:text-6xl font-extrabold mb-8 leading-tight text-gray-900 dark:text-white drop-shadow-md">
-                        I transform data and <br> create meaningful reports.
-                    </h1>
-                    <div class="flex flex-wrap gap-4 mt-8">
-                        <a href="#contact" class="px-8 py-4 bg-accent-primary text-white rounded-full font-bold tracking-widest uppercase hover:scale-105 transition-transform shadow-lg shadow-accent-primary/30">Hire Me</a>
-                        <a href="/cv-maciej-wochna.pdf" download class="px-8 py-4 border-2 border-accent-primary text-accent-primary rounded-full font-bold tracking-widest uppercase hover:bg-accent-primary hover:text-white transition-colors">Download CV</a>
-                    </div>
-                </div>
+        <div class="slide absolute inset-0 opacity-0 transition-opacity duration-1000 z-10 pointer-events-none" data-index="1">
+            <div class="absolute inset-0 bg-cover bg-center lg:bg-right lg:w-[60%] lg:left-[40%]" 
+                 style="background-image: url('/profile2.jpg');">
+                <div class="absolute inset-0 bg-black/60 lg:bg-black/20"></div>
             </div>
-            <div class="absolute right-0 top-0 h-full w-full lg:w-[60%] bg-cover bg-center z-10" 
-                 style="background-image: url('/profile2.jpg'); clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);">
-                 <div class="absolute inset-0 bg-black/10 dark:bg-black/40"></div>
+            
+            <div class="relative h-full flex flex-col justify-center items-center lg:items-start px-6 lg:pl-24 z-30 lg:w-[55%] text-center lg:text-left">
+                <span class="text-accent-primary font-bold tracking-[4px] uppercase mb-4 text-sm">Analytics & Logic</span>
+                <h1 class="text-4xl lg:text-6xl font-black mb-8 leading-tight uppercase">
+                    I transform data and <br class="hidden lg:block"> create meaningful reports.
+                </h1>
+                
+                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                    <a href="#contact" class="px-10 py-4 bg-accent-primary text-white rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-transform text-center">
+                        Hire Me
+                    </a>
+                    <a href="/cv-maciej-wochna.pdf" download class="px-10 py-4 border-2 border-accent-primary text-accent-primary rounded-full font-bold uppercase tracking-widest hover:bg-accent-primary hover:text-white transition-all text-center">
+                        Download CV
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
-    <button id="prev-slide" class="hidden lg:flex absolute left-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 items-center justify-center border border-gray-400/50 text-gray-900 dark:text-white dark:border-white/30 hover:bg-accent-primary hover:text-white rounded-full transition-all">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+    <button id="prev-slide" class="absolute left-4 top-1/2 -translate-y-1/2 z-50 w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center border border-white/30 text-white hover:bg-accent-primary hover:border-accent-primary transition-all rounded-full">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 lg:w-6 lg:h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
     </button>
-    <button id="next-slide" class="hidden lg:flex absolute right-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 items-center justify-center border border-gray-400/50 text-gray-900 dark:text-white dark:border-white/30 hover:bg-accent-primary hover:text-white rounded-full transition-all">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+    <button id="next-slide" class="absolute right-4 top-1/2 -translate-y-1/2 z-50 w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center border border-white/30 text-white hover:bg-accent-primary hover:border-accent-primary transition-all rounded-full">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 lg:w-6 lg:h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
     </button>
 </section>
 
@@ -70,5 +79,7 @@
 
     nextBtn?.addEventListener('click', () => showSlide((currentSlide + 1) % slides.length));
     prevBtn?.addEventListener('click', () => showSlide((currentSlide - 1 + slides.length) % slides.length));
+    
+    // Auto-swipe
     setInterval(() => showSlide((currentSlide + 1) % slides.length), 6000);
 </script>
