@@ -5,20 +5,27 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* ZMIANA: Scroll Snap działa TYLKO na dużych ekranach (min-width: 1024px) */
+    
+    /* Włączamy skakanie ZAWSZE (Mobile + Desktop) */
+    scroll-snap-type: y mandatory;
+    
+    /* KLUCZOWE: Margines od góry, aby Sticky Header nie zasłaniał treści po skoku */
+    /* 80px na mobile (wysokość paska), 0 na desktop (bo pasek jest z boku) */
+    scroll-padding-top: 100px;
+    
     @media (min-width: 1024px) {
-        scroll-snap-type: y mandatory;
+        scroll-padding-top: 0px;
     }
   }
   
   section {
     @apply min-h-screen flex flex-col justify-center px-4 md:px-0;
     
-    /* ZMIANA: To też tylko na desktop */
-    @media (min-width: 1024px) {
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
-    }
+    /* Punkt przyciągania */
+    scroll-snap-align: start;
+    
+    /* Wymuszamy zatrzymanie na sekcji (nie można przewinąć w połowie) */
+    scroll-snap-stop: always;
   }
 
   body {
