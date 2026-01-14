@@ -3,29 +3,22 @@
 @tailwind utilities;
 
 @layer base {
-  /* Ustawienia dla całej strony (HTML) */
   html {
-    scroll-behavior: smooth; /* Płynne animacje przy klikaniu w linki kotwic */
-    
-    /* SCROLL SNAP LOGIC */
-    /* y: oś pionowa */
-    /* mandatory: przeglądarka MUSI dociągnąć do najbliższej sekcji po zakończeniu scrollowania. */
-    /* Jeśli użytkownik zatrzyma się w połowie, strona sama przewinie się w górę lub w dół. */
-    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    /* ZMIANA: Scroll Snap działa TYLKO na dużych ekranach (min-width: 1024px) */
+    @media (min-width: 1024px) {
+        scroll-snap-type: y mandatory;
+    }
   }
   
-  /* Definicja zachowania dla każdej sekcji */
   section {
-    /* min-h-screen: Sekcja ma zawsze minimalnie 100% wysokości okna przeglądarki. */
-    /* To gwarantuje, że jedna sekcja zajmuje cały ekran ("One thought per screen"). */
     @apply min-h-screen flex flex-col justify-center px-4 md:px-0;
-
-    /* Punkt zaczepienia */
-    /* start: Góra sekcji ma się "przykleić" do góry okna przeglądarki. */
-    scroll-snap-align: start;
     
-    /* Zabezpieczenie: jeśli treść jest wyższa niż ekran, pozwól scrollować normalnie */
-    scroll-snap-stop: always;
+    /* ZMIANA: To też tylko na desktop */
+    @media (min-width: 1024px) {
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+    }
   }
 
   body {
