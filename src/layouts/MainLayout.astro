@@ -2,7 +2,6 @@
 import '../styles/global.css';
 const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
 ---
-
 <!DOCTYPE html>
 <html lang="pl" class="scroll-smooth">
 <head>
@@ -18,7 +17,6 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
     </script>
 </head>
 <body class="bg-bg-primary text-text-primary antialiased">
-    
     <nav id="navbar" class="fixed top-0 w-full z-[100] transition-all duration-500 py-4 lg:py-6 px-6 lg:px-12 flex justify-between items-center bg-transparent text-white">
         <a href="#home" id="nav-logo" class="text-xl lg:text-2xl font-black tracking-tighter relative z-[110] uppercase transition-colors duration-500">
             Maciej <span class="text-accent-primary">Wochna</span>
@@ -44,9 +42,7 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
             </ul>
         </div>
     </nav>
-
     <slot />
-
     <style is:global>
         .nav-link { transition: color 0.3s ease; }
         .nav-link.active { color: #10b981 !important; }
@@ -59,7 +55,6 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
         .menu-open #hamburger-icon::after { transform: rotate(-45deg) translate(0, -8px); }
         body.menu-open { overflow: hidden; }
     </style>
-
     <script>
         const navbar = document.getElementById('navbar');
         const mobileBtn = document.getElementById('mobile-menu-btn');
@@ -79,7 +74,6 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
                 lightIcon?.classList.add('hidden');
             }
         }
-
         function handleScroll() {
             const scrollY = window.scrollY;
             const isDark = document.documentElement.classList.contains('dark');
@@ -91,7 +85,6 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
                 navbar?.classList.remove('scrolled-dark', 'scrolled-light', 'py-4', 'shadow-xl');
                 navbar?.classList.add('bg-transparent', 'text-white', 'py-6');
             }
-
             let current = "";
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
@@ -102,18 +95,15 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
                 if (link.getAttribute("href") === `#${current}`) link.classList.add("active");
             });
         }
-
         mobileBtn?.addEventListener('click', () => {
             document.body.classList.toggle('menu-open');
             navContainer?.classList.toggle('translate-x-full');
             navContainer?.classList.toggle('translate-x-0');
         });
-
         navLinks.forEach(link => link.addEventListener('click', () => {
             document.body.classList.remove('menu-open');
             navContainer?.classList.add('translate-x-full');
         }));
-
         updateIcons();
         handleScroll();
         window.addEventListener('scroll', handleScroll);
