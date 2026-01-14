@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+
+// 1. Generowanie ścieżek dla wszystkich projektów
+export async function getStaticPaths() {
+  const workEntries = await getCollection('work');
+  return workEntries.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+// 2. Pobranie danych konkretnego projektu
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<MainLayout title={`${entry.data.title} | Maciej Wochna`}>
+  <div class="mb-12">
+    <a href="/" class="text-accent-primary font-mono text-sm hover:underline">← Powrót</a>
+  </div>
+  
+  <article class="prose prose-invert prose-green max-w-none">
+    <header class="mb-16">
+      <h1 class="text-5xl font-extrabold mb-6 italic">{entry.data.title}</h1>
+      <div class="flex flex-wrap gap-3">
+        {entry.data.tags.map(tag => (
+          <span class="text-xs border border-accent-primary/30 text-accent-primary px-3 py-1">
+            {tag}
+          </span>
+        ))}
+      </div>
+    </header>
+
+    <div class="line-height-relaxed text-lg text-text-secondary">
+      <Content />
+    </div>
+  </article>
+</MainLayout>

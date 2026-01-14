@@ -1,0 +1,47 @@
+---
+import '../styles/global.css';
+const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-bg-primary text-text-primary antialiased">
+    
+    <div class="max-w-[1400px] mx-auto px-6 py-12 lg:grid lg:grid-cols-12 lg:gap-16 min-h-screen">
+        
+        <header class="lg:col-span-3 lg:sticky lg:top-12 lg:h-[calc(100vh-6rem)] flex flex-col justify-between mb-16 lg:mb-0">
+            <div>
+                <h1 class="text-4xl font-bold tracking-tight mb-2">
+                    <a href="/" class="hover:text-accent-primary transition-colors">Maciej<br>Wochna.</a>
+                </h1>
+                <p class="text-text-secondary text-sm font-medium mb-8">
+                    Senior Data Engineer
+                </p>
+                
+                <nav class="hidden lg:flex flex-col gap-3">
+                    <a href="/#work" class="text-text-secondary hover:text-white transition-colors text-sm uppercase tracking-wider">Projekty</a>
+                    <a href="/#philosophy" class="text-text-secondary hover:text-white transition-colors text-sm uppercase tracking-wider">Filozofia</a>
+                    <a href="/#contact" class="text-text-secondary hover:text-white transition-colors text-sm uppercase tracking-wider">Kontakt</a>
+                </nav>
+            </div>
+
+            <div class="text-text-secondary text-sm hidden lg:block">
+                © {new Date().getFullYear()}
+            </div>
+        </header>
+
+        <main class="lg:col-span-9 flex flex-col gap-24">
+            <slot />
+        </main>
+
+    </div>
+</body>
+</html>
