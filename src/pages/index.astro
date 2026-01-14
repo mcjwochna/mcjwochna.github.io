@@ -10,17 +10,30 @@ const projects = await getCollection('work');
 
 <MainLayout>
     
-    <section class="min-h-[60vh] flex flex-col justify-center border-b border-bg-secondary pb-12">
+    <section id="hero" class="border-b border-bg-secondary/50">
         <span class="text-accent-primary font-mono text-sm mb-4">01. INTRODUCTION</span>
-        <h2 class="text-3xl md:text-5xl font-bold leading-tight mb-6">
+        <h2 class="text-3xl md:text-6xl font-bold leading-tight mb-6">
             Specjalizuję się w <span class="text-white">Azure Fabric</span> oraz <span class="text-white">modelowaniu danych</span>. Buduję pipeline'y, które są skalowalne, oszczędne i logiczne.
         </h2>
-        <p class="text-text-secondary max-w-2xl text-lg mb-8">
-            Dla mnie Data Engineering to nie tylko przesuwanie bajtów. To architektura decyzji. Zobacz, jak zamieniam surowe dane w actionable insights.
+        <p class="text-text-secondary max-w-2xl text-lg mb-10">
+            Dla mnie Data Engineering to nie tylko przesuwanie bajtów. To architektura decyzji.
         </p>
-        <div>
-            <a href="#work" class="inline-block border border-text-secondary px-8 py-3 text-sm hover:border-accent-primary hover:text-accent-primary transition-colors">
-                ZOBACZ PROJEKTY ↓
+        
+        <div class="flex flex-col md:flex-row gap-5">
+            
+            <button 
+                id="hire-btn"
+                class="bg-accent-primary text-bg-primary px-10 py-4 font-bold tracking-wider hover:bg-white hover:scale-105 transition-all duration-300 shadow-lg shadow-accent-primary/20"
+            >
+                HIRE ME
+            </button>
+
+            <a 
+                href="/cv-maciej-wochna.pdf" 
+                download="CV_Maciej_Wochna_Data_Engineer.pdf"
+                class="border border-text-secondary text-text-secondary px-10 py-4 font-bold tracking-wider hover:border-white hover:text-white transition-colors text-center"
+            >
+                DOWNLOAD CV
             </a>
         </div>
     </section>
@@ -39,3 +52,37 @@ const projects = await getCollection('work');
     <Contact />
 
 </MainLayout>
+
+<script>
+    // 1. Nasłuchujemy na kliknięcie przycisku "HIRE ME"
+    // Używamy ?. (optional chaining), żeby kod nie wyrzucił błędu, jeśli przycisku brak na stronie
+    document.getElementById('hire-btn')?.addEventListener('click', () => {
+        
+        // 2. Znajdujemy sekcję kontaktu po ID
+        const contactSection = document.getElementById('contact');
+        
+        if (contactSection) {
+            // 3. Płynne przewinięcie do sekcji
+            contactSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // 4. Automatyczne wypełnienie formularza
+            // Czekamy 800ms, aż animacja przewijania się zakończy (UX)
+            setTimeout(() => {
+                // Szukamy pól formularza (input i textarea) zdefiniowanych w Contact.astro
+                const emailInput = document.querySelector('input[name="email"]') as HTMLInputElement;
+                const messageInput = document.querySelector('textarea[name="message"]') as HTMLTextAreaElement;
+                
+                if (messageInput) {
+                    // Wpisujemy treść wiadomości
+                    messageInput.value = "TEMAT: Job offer (interview)\n\nTREŚĆ:\nYour website and credentials are impressive. I want to invite you to a job interview.";
+                    
+                    // Ustawiamy kursor w polu wiadomości (focus), aby użytkownik widział, co się stało
+                    messageInput.focus();
+                    
+                    // Opcjonalnie: podświetlamy pole na chwilę (visual feedback)
+                    messageInput.style.borderColor = "#10b981"; // Twój kolor accent-primary
+                }
+            }, 800);
+        }
+    });
+</script>
