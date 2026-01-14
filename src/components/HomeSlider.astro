@@ -1,0 +1,74 @@
+---
+// Komponent obsługujący główny slider w stylu CLYDE
+---
+<section id="home" class="relative h-screen w-full overflow-hidden bg-[#f4f4f4] dark:bg-[#0a0a0a] text-text-primary">
+    
+    <div id="slider-track" class="h-full w-full relative">
+        
+        <div class="slide absolute inset-0 opacity-100 transition-opacity duration-1000 ease-in-out z-10" data-index="0">
+            <div class="absolute left-0 top-0 h-full w-full lg:w-[65%] flex flex-col justify-center px-6 lg:pl-24 z-30 pointer-events-none">
+                <div class="pointer-events-auto">
+                    <span class="text-accent-primary font-bold tracking-[4px] uppercase mb-4 animate-fadeInUp block">Hi! I'm Maciej</span>
+                    <h1 class="text-4xl lg:text-6xl font-extrabold mb-8 leading-tight animate-fadeInUp delay-100 text-gray-900 dark:text-white drop-shadow-md">
+                        Data Engineer <br> & BI Developer
+                    </h1>
+                    <div class="flex flex-wrap gap-4 mt-8 animate-fadeInUp delay-200">
+                        <a href="#contact" class="px-8 py-4 bg-accent-primary text-white rounded-full font-bold tracking-widest uppercase hover:scale-105 transition-transform shadow-lg shadow-accent-primary/30">Hire Me</a>
+                        <a href="/cv-maciej-wochna.pdf" download class="px-8 py-4 border-2 border-accent-primary text-accent-primary rounded-full font-bold tracking-widest uppercase hover:bg-accent-primary hover:text-white transition-colors">Download CV</a>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute right-0 top-0 h-full w-full lg:w-[60%] bg-cover bg-center z-10" 
+                 style="background-image: url('/profile.jpg'); clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);">
+                 <div class="absolute inset-0 bg-black/10 dark:bg-black/40"></div>
+            </div>
+        </div>
+
+        <div class="slide absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out z-10 pointer-events-none" data-index="1">
+            <div class="absolute left-0 top-0 h-full w-full lg:w-[65%] flex flex-col justify-center px-6 lg:pl-24 z-30 pointer-events-none">
+                <div class="pointer-events-auto">
+                    <span class="text-accent-primary font-bold tracking-[4px] uppercase mb-4 block">Analytics & Logic</span>
+                    <h1 class="text-4xl lg:text-6xl font-extrabold mb-8 leading-tight text-gray-900 dark:text-white drop-shadow-md">
+                        I transform data and <br> create meaningful reports.
+                    </h1>
+                    <div class="flex flex-wrap gap-4 mt-8">
+                        <a href="#contact" class="px-8 py-4 bg-accent-primary text-white rounded-full font-bold tracking-widest uppercase hover:scale-105 transition-transform shadow-lg shadow-accent-primary/30">Hire Me</a>
+                        <a href="/cv-maciej-wochna.pdf" download class="px-8 py-4 border-2 border-accent-primary text-accent-primary rounded-full font-bold tracking-widest uppercase hover:bg-accent-primary hover:text-white transition-colors">Download CV</a>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute right-0 top-0 h-full w-full lg:w-[60%] bg-cover bg-center z-10" 
+                 style="background-image: url('/profile2.jpg'); clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);">
+                 <div class="absolute inset-0 bg-black/10 dark:bg-black/40"></div>
+            </div>
+        </div>
+    </div>
+
+    <button id="prev-slide" class="hidden lg:flex absolute left-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 items-center justify-center border border-gray-400/50 text-gray-900 dark:text-white dark:border-white/30 hover:bg-accent-primary hover:text-white rounded-full transition-all">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+    </button>
+    <button id="next-slide" class="hidden lg:flex absolute right-8 top-1/2 -translate-y-1/2 z-50 w-12 h-12 items-center justify-center border border-gray-400/50 text-gray-900 dark:text-white dark:border-white/30 hover:bg-accent-primary hover:text-white rounded-full transition-all">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+    </button>
+</section>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prev-slide');
+    const nextBtn = document.getElementById('next-slide');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+        slides.forEach(s => {
+            s.classList.replace('opacity-100', 'opacity-0');
+            s.classList.add('pointer-events-none');
+        });
+        slides[index].classList.replace('opacity-0', 'opacity-100');
+        slides[index].classList.remove('pointer-events-none');
+        currentSlide = index;
+    }
+
+    nextBtn?.addEventListener('click', () => showSlide((currentSlide + 1) % slides.length));
+    prevBtn?.addEventListener('click', () => showSlide((currentSlide - 1 + slides.length) % slides.length));
+    setInterval(() => showSlide((currentSlide + 1) % slides.length), 6000);
+</script>

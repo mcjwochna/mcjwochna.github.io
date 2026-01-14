@@ -1,48 +1,106 @@
-<section id="contact" class="mt-32 pb-20">
-    <div class="flex items-center gap-4 mb-16">
-        <span class="text-accent-primary font-mono text-sm">04. Contact</span>
-        <div class="h-[1px] bg-bg-secondary flex-1"></div>
-    </div>
+---
+// src/components/Contact.astro
+---
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
-        <div>
-            <h2 class="text-4xl font-bold mb-6 italic">Zbudujmy coś wydajnego.</h2>
-            <p class="text-text-secondary mb-8 text-lg">
-                Szukasz inżyniera, który rozumie biznesową wartość danych? 
-                Napisz bezpośrednio lub pobierz moje techniczne CV.
-            </p>
-            <div class="flex flex-col gap-4">
-                <a href="/cv-maciej-wochna.pdf" target="_blank" class="text-accent-primary hover:underline font-mono">
-                    → Download Technical CV (PDF)
-                </a>
-                <a href="mailto:maciej@in2data.pl" class="text-text-primary hover:text-accent-primary transition-colors">
-                    maciej.wochna@gmail.com
-                </a>
-            </div>
+<section id="contact" class="bg-bg-secondary transition-colors duration-300 py-24">
+    <div class="max-w-[1400px] mx-auto px-6 h-full flex flex-col justify-center">
+        
+        <div class="mb-16 border-l-4 border-accent-primary pl-6">
+            <span class="text-accent-primary font-mono text-sm tracking-[4px] uppercase block mb-2">04. Contact</span>
+            <h2 class="text-4xl lg:text-5xl font-black uppercase text-gray-900 dark:text-white leading-none">Let's Talk</h2>
         </div>
 
-        <form action="https://formspree.io/f/mpqqznnl" method="POST" class="flex flex-col gap-4">
-            <input 
-                type="email" 
-                name="email" 
-                placeholder="Twój e-mail" 
-                required 
-                class="bg-bg-secondary border-none p-4 text-text-primary focus:ring-1 focus:ring-accent-primary outline-none"
-            >
-            <textarea 
-                name="message" 
-                placeholder="W czym mogę pomóc?" 
-                rows="4" 
-                required 
-                class="bg-bg-secondary border-none p-4 text-text-primary focus:ring-1 focus:ring-accent-primary outline-none"
-            ></textarea>
-            <button type="submit" class="bg-accent-primary text-bg-primary font-bold py-4 hover:bg-opacity-90 transition-all">
-                Wyślij wiadomość
-            </button>
-        </form>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            
+            <form id="contact-form" action="#" method="POST" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <input type="text" name="name" placeholder="Your Name" required
+                        class="w-full bg-bg-primary border border-black/10 dark:border-white/10 p-4 rounded-xl focus:outline-none focus:border-accent-primary transition-colors text-text-primary" />
+                    <input type="email" name="email" placeholder="Your Email" required
+                        class="w-full bg-bg-primary border border-black/10 dark:border-white/10 p-4 rounded-xl focus:outline-none focus:border-accent-primary transition-colors text-text-primary" />
+                </div>
+                
+                <input type="text" id="contact-subject" name="subject" placeholder="Subject"
+                    class="w-full bg-bg-primary border border-black/10 dark:border-white/10 p-4 rounded-xl focus:outline-none focus:border-accent-primary transition-colors text-text-primary" />
+                
+                <textarea id="contact-message" name="message" rows="6" placeholder="Message"
+                    class="w-full bg-bg-primary border border-black/10 dark:border-white/10 p-4 rounded-xl focus:outline-none focus:border-accent-primary transition-colors text-text-primary resize-none"></textarea>
+                
+                <button type="submit" class="bg-accent-primary text-white px-12 py-4 rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-transform shadow-lg shadow-accent-primary/30">
+                    Send Message
+                </button>
+            </form>
+
+            <div class="space-y-10 lg:pl-12">
+                
+                <div class="flex items-start gap-6 group">
+                    <div class="w-12 h-12 bg-bg-primary flex items-center justify-center rounded-xl border border-black/5 dark:border-white/10 text-accent-primary group-hover:bg-accent-primary group-hover:text-white transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-[10px] font-bold uppercase tracking-widest text-text-secondary mb-1">Phone</h4>
+                        <p class="text-lg font-bold text-gray-900 dark:text-white">+48 603 234 834</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-6 group">
+                    <div class="w-12 h-12 bg-bg-primary flex items-center justify-center rounded-xl border border-black/5 dark:border-white/10 text-accent-primary group-hover:bg-accent-primary group-hover:text-white transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-[10px] font-bold uppercase tracking-widest text-text-secondary mb-1">Email</h4>
+                        <a href="mailto:maciej.wochna@gmail.com" class="text-lg font-bold text-gray-900 dark:text-white hover:text-accent-primary transition-colors">maciej.wochna@gmail.com</a>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-6 group">
+                    <div class="w-12 h-12 bg-bg-primary flex items-center justify-center rounded-xl border border-black/5 dark:border-white/10 text-accent-primary group-hover:bg-accent-primary group-hover:text-white transition-all">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-[10px] font-bold uppercase tracking-widest text-text-secondary mb-1">LinkedIn</h4>
+                        <a href="https://www.linkedin.com/in/wochnamaciej/" target="_blank" class="text-lg font-bold text-gray-900 dark:text-white hover:text-accent-primary transition-colors">My Profile</a>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-6 group">
+                    <div class="w-12 h-12 bg-bg-primary flex items-center justify-center rounded-xl border border-black/5 dark:border-white/10 text-accent-primary group-hover:bg-accent-primary group-hover:text-white transition-all">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-[10px] font-bold uppercase tracking-widest text-text-secondary mb-1">Website</h4>
+                        <p class="text-lg font-bold text-gray-900 dark:text-white">maciejwochna.pl</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 </section>
 
-<footer class="mt-20 py-10 border-t border-bg-secondary text-center text-sm text-text-secondary font-mono">
-    © {new Date().getFullYear()} MACIEJ WOCHNA — DATA ENGINEER / POWER BI DEVELOPER
-</footer>
+<script>
+    // Logika wyzwalana po kliknięciu przycisku HIRE ME w sliderze
+    document.addEventListener('DOMContentLoaded', () => {
+        const hireMeBtns = document.querySelectorAll('a[href="#contact"]');
+        const subjectInput = document.getElementById('contact-subject') as HTMLInputElement;
+        const messageInput = document.getElementById('contact-message') as HTMLTextAreaElement;
+
+        hireMeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Wypełniamy pola tylko w momencie kliknięcia przycisku akcji
+                if(subjectInput && messageInput) {
+                    subjectInput.value = "Project Inquiry";
+                    messageInput.value = "Hi Maciej, I would like to discuss a potential Data Engineering project with you...";
+                }
+            });
+        });
+    });
+</script>

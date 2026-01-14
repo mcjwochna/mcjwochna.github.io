@@ -1,88 +1,67 @@
 ---
 import { getCollection } from 'astro:content';
 import MainLayout from '../layouts/MainLayout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import HomeSlider from '../components/HomeSlider.astro';
 import Philosophy from '../components/Philosophy.astro';
+import Services from '../components/Services.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 import Contact from '../components/Contact.astro';
 
+// Pobranie projektów
 const projects = await getCollection('work');
 ---
 
-<MainLayout>
+<MainLayout title="Maciej Wochna | Senior Data Engineer">
     
-    <section id="hero" class="border-b border-bg-secondary/50">
-        <span class="text-accent-primary font-mono text-sm mb-4">01. INTRODUCTION</span>
-        <h2 class="text-3xl md:text-6xl font-bold leading-tight mb-6">
-            Specjalizuję się w <span class="text-white">Azure Fabric</span> oraz <span class="text-white">modelowaniu danych</span>. Buduję pipeline'y, które są skalowalne, oszczędne i logiczne.
-        </h2>
-        <p class="text-text-secondary max-w-2xl text-lg mb-10">
-            Dla mnie Data Engineering to nie tylko przesuwanie bajtów. To architektura decyzji.
-        </p>
-        
-        <div class="flex flex-col md:flex-row gap-5">
+    <HomeSlider />
+
+    <section id="about" class="bg-bg-primary transition-colors duration-300">
+        <div class="max-w-[1400px] mx-auto px-6 pt-24">
+            <div class="mb-12 border-l-4 border-accent-primary pl-6">
+                <span class="text-accent-primary font-mono text-sm tracking-[4px] uppercase block mb-2">01. About</span>
+                <h2 class="text-4xl lg:text-5xl font-black uppercase text-gray-900 dark:text-white">About Me</h2>
+            </div>
+            <Philosophy />
+        </div>
+    </section>
+
+    <Services />
+
+    <section id="portfolio" class="bg-bg-primary flex flex-col">
+        <div class="max-w-[1500px] mx-auto px-6 h-full w-full flex flex-col pt-24 pb-12">
             
-            <button 
-                id="hire-btn"
-                class="bg-accent-primary text-bg-primary px-10 py-4 font-bold tracking-wider hover:bg-white hover:scale-105 transition-all duration-300 shadow-lg shadow-accent-primary/20"
-            >
-                HIRE ME
-            </button>
+            <div class="mb-12 border-l-4 border-accent-primary pl-6">
+                <span class="text-accent-primary font-mono text-sm tracking-[4px] uppercase block mb-2">02. Portfolio</span>
+                <h2 class="text-4xl lg:text-6xl font-black uppercase text-gray-900 dark:text-white leading-none">Portfolio</h2>
+            </div>
 
-            <a 
-                href="/cv-maciej-wochna.pdf" 
-                download="CV_Maciej_Wochna_Data_Engineer.pdf"
-                class="border border-text-secondary text-text-secondary px-10 py-4 font-bold tracking-wider hover:border-white hover:text-white transition-colors text-center"
-            >
-                DOWNLOAD CV
-            </a>
+            <div class="flex-grow flex items-center justify-center">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-16 w-full items-stretch">
+                    {projects.slice(0, 3).map(project => (
+                        <div class="w-full flex">
+                            <ProjectCard project={project} />
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     </section>
 
-    <section id="work">
-        <span class="text-accent-primary font-mono text-sm mb-8 block">02. SELECTED WORK</span>
-        <div class="grid gap-12">
-            {projects.map(project => (
-                <ProjectCard project={project} />
-            ))}
-        </div>
-    </section>
-
-    <Philosophy />
-
-    <Contact />
+    <div id="contact" class="bg-bg-secondary">
+        <Contact />
+    </div>
 
 </MainLayout>
 
-<script>
-    // 1. Nasłuchujemy na kliknięcie przycisku "HIRE ME"
-    // Używamy ?. (optional chaining), żeby kod nie wyrzucił błędu, jeśli przycisku brak na stronie
-    document.getElementById('hire-btn')?.addEventListener('click', () => {
-        
-        // 2. Znajdujemy sekcję kontaktu po ID
-        const contactSection = document.getElementById('contact');
-        
-        if (contactSection) {
-            // 3. Płynne przewinięcie do sekcji
-            contactSection.scrollIntoView({ behavior: 'smooth' });
-            
-            // 4. Automatyczne wypełnienie formularza
-            // Czekamy 800ms, aż animacja przewijania się zakończy (UX)
-            setTimeout(() => {
-                // Szukamy pól formularza (input i textarea) zdefiniowanych w Contact.astro
-                const emailInput = document.querySelector('input[name="email"]') as HTMLInputElement;
-                const messageInput = document.querySelector('textarea[name="message"]') as HTMLTextAreaElement;
-                
-                if (messageInput) {
-                    // Wpisujemy treść wiadomości
-                    messageInput.value = "TEMAT: Job offer (interview)\n\nTREŚĆ:\nYour website and credentials are impressive. I want to invite you to a job interview.";
-                    
-                    // Ustawiamy kursor w polu wiadomości (focus), aby użytkownik widział, co się stało
-                    messageInput.focus();
-                    
-                    // Opcjonalnie: podświetlamy pole na chwilę (visual feedback)
-                    messageInput.style.borderColor = "#10b981"; // Twój kolor accent-primary
-                }
-            }, 800);
-        }
-    });
-</script>
+<style>
+    /* Zapewnienie, że sekcje nie nakładają się na siebie */
+    section {
+        height: calc(100vh - 80px);
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    #home {
+        height: 100vh;
+    }
+</style>

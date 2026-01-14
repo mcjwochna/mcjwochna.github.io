@@ -3,32 +3,40 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-    
-    /* Włączamy skakanie ZAWSZE (Mobile + Desktop) */
-    scroll-snap-type: y mandatory;
-    
-    /* KLUCZOWE: Margines od góry, aby Sticky Header nie zasłaniał treści po skoku */
-    /* 80px na mobile (wysokość paska), 0 na desktop (bo pasek jest z boku) */
-    scroll-padding-top: 100px;
-    
-    @media (min-width: 1024px) {
-        scroll-padding-top: 0px;
-    }
-  }
-  
-  section {
-    @apply min-h-screen flex flex-col justify-center px-4 md:px-0;
-    
-    /* Punkt przyciągania */
-    scroll-snap-align: start;
-    
-    /* Wymuszamy zatrzymanie na sekcji (nie można przewinąć w połowie) */
-    scroll-snap-stop: always;
+  :root {
+    --bg-primary: #f4f4f4;
+    --bg-secondary: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #666666;
   }
 
+  /* Wymuszona klasa .dark dla przełącznika */
+  .dark {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #111111;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: 80px; 
+  }
+  
   body {
-    @apply bg-bg-primary text-text-primary;
+    @apply bg-bg-primary text-text-primary transition-colors duration-300;
+  }
+
+  section {
+    height: calc(100vh - 80px);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    overflow: hidden;
+    position: relative;
+  }
+
+  #home {
+    height: 100vh !important;
   }
 }

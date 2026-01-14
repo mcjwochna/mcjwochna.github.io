@@ -1,0 +1,38 @@
+---
+// Tablica z usługami - łatwa do edycji
+const services = [
+  { title: "UX Design", icon: "🎨", desc: "Tworzenie intuicyjnych i estetycznych interfejsów dla raportów Power BI." },
+  { title: "Dashboard Design", icon: "📊", desc: "Projektowanie czytelnych dashboardów wspierających szybkie decyzje." },
+  { title: "SQL Development", icon: "🗄️", desc: "Budowa i optymalizacja zapytań w celu przyspieszenia odświeżania danych." },
+  { title: "ETL Processes", icon: "⚙️", desc: "Automatyzacja przepływu danych przy użyciu Azure Fabric i Spark." },
+  { title: "Data Modeling", icon: "🧠", desc: "Tworzenie skalowalnych schematów gwiazdy i relacyjnych baz danych." },
+  { title: "Business Analysis", icon: "📈", desc: "Przekładanie potrzeb biznesowych na konkretne rozwiązania techniczne." }
+];
+---
+
+<section id="services" class="bg-bg-secondary transition-colors duration-300">
+  <div class="max-w-[1400px] mx-auto px-6">
+    <div class="text-center mb-16">
+      <span class="text-accent-primary font-mono text-sm tracking-[4px] uppercase block mb-4">02. Services</span>
+      <h2 class="text-3xl md:text-5xl font-extrabold text-gray-900 dark:text-white uppercase">Co oferuję</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {services.map(service => (
+        <div class="group p-10 bg-bg-primary dark:bg-white/5 border border-black/5 dark:border-white/10 rounded-2xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 text-center">
+          <div class="text-5xl mb-6 grayscale group-hover:grayscale-0 transition-all duration-500 inline-block">
+            {service.icon}
+          </div>
+          
+          <h3 class="text-xl font-bold mb-4 text-gray-900 dark:text-white uppercase tracking-wider">
+            {service.title}
+          </h3>
+          
+          <p class="text-text-secondary text-sm leading-relaxed">
+            {service.desc}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
