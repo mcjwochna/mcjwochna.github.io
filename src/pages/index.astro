@@ -6,31 +6,35 @@ import Philosophy from '../components/Philosophy.astro';
 import Services from '../components/Services.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Contact from '../components/Contact.astro';
+
 const projects = await getCollection('work');
 ---
 <MainLayout title="Maciej Wochna | Data Engineer">
-    <HomeSlider />
-    <section id="about" class="bg-bg-primary overflow-visible">
-        <div class="max-w-[1400px] mx-auto px-6 py-16 lg:py-0">
-            <div class="mb-12 border-l-4 border-accent-primary pl-6">
-                <span class="text-accent-primary font-mono text-sm tracking-[4px] uppercase block mb-2">01. About Me</span>
-                <h2 class="text-3xl md:text-5xl font-black text-gray-900 dark:text-white uppercase">Moja Filozofia</h2>
+    <main class="w-full">
+        <HomeSlider />
+
+        <section id="about" class="bg-bg-primary section-container">
+            <div class="max-w-[1400px] mx-auto px-6 py-20 lg:py-0">
+                <div class="mb-12 border-l-4 border-accent-primary pl-6">
+                    <span class="text-accent-primary font-mono text-sm tracking-[4px] uppercase block mb-2">01. About Me</span>
+                    <h2 class="text-3xl md:text-5xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">Moja Filozofia</h2>
+                </div>
+                <Philosophy />
             </div>
-            <Philosophy />
-        </div>
-    </section>
-    <section id="services" class="bg-bg-secondary overflow-visible">
-        <div class="py-16 lg:py-0">
-            <Services />
-        </div>
-    </section>
-    <section id="portfolio" class="bg-bg-primary overflow-visible">
-        <div class="max-w-[1500px] mx-auto px-6 py-16 lg:py-0 h-full flex flex-col justify-center w-full">
-            <div class="mb-12 border-l-4 border-accent-primary pl-6">
-                <span class="text-accent-primary font-mono text-sm tracking-[4px] uppercase block mb-2">02. Portfolio</span>
-                <h2 class="text-3xl md:text-5xl font-black text-gray-900 dark:text-white uppercase">Portfolio</h2>
+        </section>
+
+        <section id="services" class="bg-bg-secondary section-container">
+            <div class="py-20 lg:py-0">
+                <Services />
             </div>
-            <div class="flex-grow flex items-center justify-center w-full">
+        </section>
+
+        <section id="portfolio" class="bg-bg-primary section-container">
+            <div class="max-w-[1500px] mx-auto px-6 py-20 lg:py-0 flex flex-col justify-center w-full">
+                <div class="mb-12 border-l-4 border-accent-primary pl-6">
+                    <span class="text-accent-primary font-mono text-sm tracking-[4px] uppercase block mb-2">02. Portfolio</span>
+                    <h2 class="text-3xl md:text-5xl font-black text-gray-900 dark:text-white uppercase tracking-tighter">Portfolio</h2>
+                </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-16 w-full">
                     {projects.slice(0, 3).map(project => (
                         <div class="w-full flex justify-center">
@@ -39,31 +43,57 @@ const projects = await getCollection('work');
                     ))}
                 </div>
             </div>
-        </div>
-    </section>
-    <section id="contact" class="bg-bg-secondary overflow-visible">
-        <div class="py-16 lg:py-0 w-full flex items-center">
-            <Contact />
-        </div>
-    </section>
+        </section>
+
+        <section id="contact" class="bg-bg-secondary section-container">
+            <div class="py-20 lg:py-0 w-full flex items-center">
+                <Contact />
+            </div>
+        </section>
+    </main>
 </MainLayout>
+
 <style is:global>
-    html, body { overflow-x: hidden; width: 100%; }
-    /* MOBILE FIRST: Usuwamy sztywne wysokości, by uniknąć nachodzenia treści */
-    section {
+    /* GLOBALNY RESET DLA MOBILE */
+    html, body {
         width: 100%;
-        min-height: 100vh; /* Zawsze co najmniej wysokość ekranu */
-        height: auto;      /* Ale rośnie, jeśli treść jest długa (naprawa mobile) */
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* KONTENER SEKCI */
+    .section-container {
+        width: 100%;
+        position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        position: relative;
+        /* NA MOBILE: Sekcja musi rosnąć z treścią */
+        min-height: 100vh;
+        height: auto;
+        overflow: visible;
     }
-    #home { height: 100vh !important; }
+
+    #home {
+        height: 100vh !important;
+        overflow: hidden;
+    }
+
+    /* DESKTOP ONLY: Scroll Snap i stałe wysokości */
     @media (min-width: 1024px) {
-        html { scroll-snap-type: y mandatory; }
-        section { scroll-snap-align: start; scroll-snap-stop: always; height: 100vh; }
-        /* Portfolio i Contact mogą być dłuższe na desktopie */
-        #portfolio, #contact, #about, #services { height: auto; min-height: 100vh; }
+        html {
+            scroll-snap-type: y mandatory;
+        }
+        .section-container {
+            height: 100vh;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            overflow: hidden;
+        }
+        /* Te sekcje na desktopie mogą być dłuższe, jeśli treść przekracza ekran */
+        #portfolio, #contact, #about, #services {
+            height: auto;
+            min-height: 100vh;
+        }
     }
 </style>

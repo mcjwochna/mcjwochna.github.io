@@ -16,7 +16,7 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
         document.documentElement.classList.toggle('dark', theme === 'dark');
     </script>
 </head>
-<body class="bg-bg-primary text-text-primary antialiased">
+<body class="bg-bg-primary text-text-primary antialiased overflow-x-hidden">
     <nav id="navbar" class="fixed top-0 w-full z-[100] transition-all duration-500 py-4 lg:py-6 px-6 lg:px-12 flex justify-between items-center bg-transparent text-white">
         <a href="#home" id="nav-logo" class="text-xl lg:text-2xl font-black tracking-tighter relative z-[110] uppercase transition-colors duration-500">
             Maciej <span class="text-accent-primary">Wochna</span>
@@ -48,8 +48,6 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
         .nav-link.active { color: #10b981 !important; }
         .scrolled-light { background-color: #000000 !important; color: #ffffff !important; }
         .dark .scrolled-dark { background-color: #ffffff !important; color: #000000 !important; }
-        #navbar.scrolled-light .nav-link:not(.active) { color: #ffffff; }
-        #navbar.scrolled-dark .nav-link:not(.active) { color: #000000; }
         .menu-open #hamburger-icon { background: transparent; }
         .menu-open #hamburger-icon::before { transform: rotate(45deg) translate(0, 8px); }
         .menu-open #hamburger-icon::after { transform: rotate(-45deg) translate(0, -8px); }
@@ -61,19 +59,7 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
         const navContainer = document.getElementById('nav-container');
         const navLinks = document.querySelectorAll('.nav-link');
         const themeToggleBtn = document.getElementById('theme-toggle');
-        const darkIcon = document.getElementById('theme-toggle-dark-icon');
-        const lightIcon = document.getElementById('theme-toggle-light-icon');
-        const sections = document.querySelectorAll('section');
 
-        function updateIcons() {
-            if (document.documentElement.classList.contains('dark')) {
-                lightIcon?.classList.remove('hidden');
-                darkIcon?.classList.add('hidden');
-            } else {
-                darkIcon?.classList.remove('hidden');
-                lightIcon?.classList.add('hidden');
-            }
-        }
         function handleScroll() {
             const scrollY = window.scrollY;
             const isDark = document.documentElement.classList.contains('dark');
@@ -85,34 +71,27 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
                 navbar?.classList.remove('scrolled-dark', 'scrolled-light', 'py-4', 'shadow-xl');
                 navbar?.classList.add('bg-transparent', 'text-white', 'py-6');
             }
-            let current = "";
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (scrollY >= sectionTop - 250) current = section.getAttribute("id") || "";
-            });
-            navLinks.forEach(link => {
-                link.classList.remove("active");
-                if (link.getAttribute("href") === `#${current}`) link.classList.add("active");
-            });
         }
+
         mobileBtn?.addEventListener('click', () => {
             document.body.classList.toggle('menu-open');
             navContainer?.classList.toggle('translate-x-full');
             navContainer?.classList.toggle('translate-x-0');
         });
+
         navLinks.forEach(link => link.addEventListener('click', () => {
             document.body.classList.remove('menu-open');
             navContainer?.classList.add('translate-x-full');
+            navContainer?.classList.remove('translate-x-0');
         }));
-        updateIcons();
-        handleScroll();
+
         window.addEventListener('scroll', handleScroll);
         themeToggleBtn?.addEventListener('click', () => {
             document.documentElement.classList.toggle('dark');
             localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-            updateIcons();
             handleScroll();
         });
+        handleScroll();
     </script>
 </body>
 </html>
