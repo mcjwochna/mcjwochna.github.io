@@ -1,23 +1,40 @@
 ---
 const { project } = Astro.props;
-const { title, tags } = project.data;
+const { title, tags, image, summary } = project.data;
 const { slug } = project;
-const imagePath = `/profile.jpg`; // Zastąp docelowymi miniaturami
+const imagePath = image || '/profile.jpg';
 ---
-
-<a href={`/work/${slug}`} class="group relative block w-full aspect-square overflow-hidden rounded-[2rem] bg-black transition-all duration-700 hover:shadow-[0_20px_60px_rgba(16,185,129,0.3)]">
+<a 
+    href={`/work/${slug}`} 
+    class="group relative block w-full h-full overflow-hidden rounded-[2rem] bg-bg-secondary transition-all duration-700 hover:shadow-[0_20px_60px_rgba(16,185,129,0.2)]"
+>
+    <!-- Background image -->
     <div 
-        class="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out scale-110 grayscale blur-md opacity-40 group-hover:scale-100 group-hover:grayscale-0 group-hover:blur-0 group-hover:opacity-100"
+        class="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-out scale-100 grayscale opacity-50 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100"
         style={`background-image: url(${imagePath});`}
-    >
-    </div>
-    <div class="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-colors duration-700"></div>
-    <div class="absolute inset-0 p-10 flex flex-col justify-end z-10">
-        <div class="translate-y-6 group-hover:translate-y-0 transition-transform duration-500">
-            <h3 class="text-white text-xl lg:text-2xl font-black uppercase leading-tight mb-4">{title}</h3>
-            <div class="flex flex-wrap gap-2 opacity-0 group-hover:opacity-100 transition-all duration-700">
-                {tags.map((tag) => (
-                    <span class="text-[9px] font-bold text-white bg-accent-primary px-3 py-1 rounded-full uppercase">{tag}</span>
+    ></div>
+    
+    <!-- Gradient overlay -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+    
+    <!-- Content -->
+    <div class="absolute inset-0 p-8 flex flex-col justify-end z-10">
+        <div class="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+            
+            <!-- Summary (pojawia się na hover) -->
+            {summary && (
+                <p class="text-white/80 text-sm mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75 line-clamp-2">
+                    {summary}
+                </p>
+            )}
+            
+            <!-- Title -->
+            <h3 class="text-white text-xl lg:text-2xl font-black uppercase leading-tight mb-3">{title}</h3>
+            
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-150">
+                {tags?.slice(0, 3).map((tag) => (
+                    <span class="text-[10px] font-bold text-white bg-accent-primary px-3 py-1 rounded-full uppercase tracking-wide">{tag}</span>
                 ))}
             </div>
         </div>

@@ -1,8 +1,9 @@
 ---
 title: "Predicting Student Retention"
-description: "End-to-end data pipeline using Azure Fabric & Power BI."
+summary: "Built ML model to identify at-risk students, reducing dropout rate by 23%."
 publishDate: 2026-01-13
 tags: ["Azure Fabric", "Power BI", "DAX"]
+priority: 1
 ---
 
 ### The Challenge

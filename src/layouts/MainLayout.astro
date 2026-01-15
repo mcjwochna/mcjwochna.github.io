@@ -1,7 +1,11 @@
 ---
 import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
 const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
 ---
+
 <!DOCTYPE html>
 <html lang="pl" class="scroll-smooth">
 <head>
@@ -9,119 +13,33 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <script is:inline>
-        const theme = (() => {
-            if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) return localStorage.getItem('theme');
+        const getTheme = () => {
+            if (typeof localStorage!== 'undefined' && localStorage.getItem('theme')) {
+                return localStorage.getItem('theme');
+            }
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
             return 'light';
-        })();
-        document.documentElement.classList.toggle('dark', theme === 'dark');
+        };
+        const theme = getTheme();
+        if (theme === 'light') {
+            document.documentElement.classList.remove('dark');
+        } else {
+            document.documentElement.classList.add('dark');
+        }
+        window.localStorage.setItem('theme', theme);
     </script>
 </head>
-<body class="bg-bg-primary text-text-primary antialiased overflow-x-hidden flex flex-col min-h-screen">
-    <nav id="navbar" class="fixed top-0 w-full z-[100] transition-all duration-500 py-4 lg:py-6 px-6 lg:px-12 flex justify-between items-center bg-transparent text-white">
-        <a href="#home" class="text-xl lg:text-2xl font-black tracking-tighter relative z-[110] uppercase transition-colors">
-            Maciej <span class="text-accent-primary">Wochna</span>
-        </a>
-
-        <button id="mobile-menu-btn" class="lg:hidden relative z-[110] text-sm font-bold tracking-widest uppercase focus:outline-none transition-colors">
-            MENU
-        </button>
-
-        <div id="nav-container" class="fixed inset-0 mobile-overlay lg:bg-transparent lg:static lg:flex items-center gap-8 translate-x-full lg:translate-x-0 transition-transform duration-500 z-[105]">
-            <ul class="flex flex-col lg:flex-row h-full lg:h-auto items-center justify-center gap-10 lg:gap-8 text-2xl lg:text-sm font-bold tracking-widest uppercase text-text-primary lg:text-inherit">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#services" class="nav-link">Services</a></li>
-                <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li class="lg:ml-4">
-                    <button id="theme-toggle" class="p-3 rounded-full border border-black/10 dark:border-white/10 lg:border-transparent">
-                        <svg id="theme-toggle-dark-icon" class="hidden w-6 h-6 lg:w-5 lg:h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-                        <svg id="theme-toggle-light-icon" class="hidden w-6 h-6 lg:w-5 lg:h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path></svg>
-                    </button>
-                </li>
-            </ul>
-        </div>
-    </nav>
+<body class="bg-bg-primary text-text-primary antialiased overflow-x-hidden flex flex-col min-h-screen transition-colors duration-300 selection:bg-accent-primary selection:text-white">
     
-    <slot />
+    <Navbar />
     
-    <style is:global>
-        .nav-link.active { color: #10b981 !important; }
-        
-        /* NAVBAR COLORS (ODWRÓCONE) */
-        /* Light Mode: Czarne tło, Biały tekst */
-        .scrolled-light { background-color: #000000 !important; color: #ffffff !important; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-        /* Dark Mode: Białe tło, Czarny tekst */
-        .dark .scrolled-dark { background-color: #ffffff !important; color: #000000 !important; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-        
-        /* Mobile Overlay */
-        .mobile-overlay { background-color: white; }
-        .dark .mobile-overlay { background-color: black; }
-        body.menu-open { overflow: hidden; }
-        
-        /* Mobile Button Colors */
-        #navbar:not(.scrolled-light):not(.scrolled-dark) #mobile-menu-btn { color: white; }
-        /* Po scrollu, jeśli Light (czarne tło) -> biały guzik. Jeśli Dark (białe tło) -> czarny guzik */
-        #navbar.scrolled-light #mobile-menu-btn { color: white; }
-        #navbar.scrolled-dark #mobile-menu-btn { color: black; }
-        
-        body.menu-open #mobile-menu-btn { color: black !important; }
-        .dark body.menu-open #mobile-menu-btn { color: white !important; }
+    <main class="flex-grow">
+        <slot />
+    </main>
 
-        @media (min-width: 1024px) {
-            .mobile-overlay { background-color: transparent !important; }
-        }
-    </style>
+    <Footer />
 
-    <script>
-        const navbar = document.getElementById('navbar');
-        const mobileBtn = document.getElementById('mobile-menu-btn');
-        const navContainer = document.getElementById('nav-container');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const darkIcon = document.getElementById('theme-toggle-dark-icon');
-        const lightIcon = document.getElementById('theme-toggle-light-icon');
-
-        const updateIcons = () => {
-            const isDark = document.documentElement.classList.contains('dark');
-            darkIcon.classList.toggle('hidden', isDark);
-            lightIcon.classList.toggle('hidden', !isDark);
-        };
-
-        themeToggleBtn.onclick = () => {
-            document.documentElement.classList.toggle('dark');
-            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-            updateIcons();
-        };
-
-        mobileBtn.onclick = () => {
-            const isOpen = document.body.classList.toggle('menu-open');
-            navContainer.classList.toggle('translate-x-full', !isOpen);
-            navContainer.classList.toggle('translate-x-0', isOpen);
-            mobileBtn.innerText = isOpen ? 'CLOSE' : 'MENU';
-        };
-
-        navLinks.forEach(link => link.addEventListener('click', () => {
-            document.body.classList.remove('menu-open');
-            navContainer.classList.add('translate-x-full');
-            navContainer.classList.remove('translate-x-0');
-            mobileBtn.innerText = 'MENU';
-        }));
-
-        const handleScroll = () => {
-            if (window.scrollY > 50) {
-                const isDark = document.documentElement.classList.contains('dark');
-                navbar.classList.add(isDark ? 'scrolled-dark' : 'scrolled-light');
-                navbar.classList.remove('bg-transparent', 'text-white');
-            } else {
-                navbar.classList.remove('scrolled-light', 'scrolled-dark');
-                navbar.classList.add('bg-transparent', 'text-white');
-            }
-        };
-
-        updateIcons();
-        handleScroll();
-        window.addEventListener('scroll', handleScroll);
-    </script>
 </body>
 </html>

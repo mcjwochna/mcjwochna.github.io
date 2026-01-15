@@ -2,47 +2,86 @@
 import { getCollection } from 'astro:content';
 import MainLayout from '../layouts/MainLayout.astro';
 import HomeSlider from '../components/HomeSlider.astro';
-import Philosophy from '../components/Philosophy.astro';
+import About from '../components/About.astro';
 import Services from '../components/Services.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Contact from '../components/Contact.astro';
+
+// Pobranie projektów (zakładamy, że jest ich co najmniej 4-5 dla efektu Bento)
 const projects = await getCollection('work');
+// Sortowanie projektów (opcjonalne, np. po dacie lub priorytecie)
+const sortedProjects = projects.sort((a, b) => a.data.priority - b.data.priority).slice(0, 5); 
 ---
+
 <MainLayout title="Maciej Wochna | Data Engineer">
-    <main>
+    <main class="snap-container">
         <HomeSlider />
         
-        <section id="about" class="bg-bg-primary section-standard">
+        <section id="about" class="bg-bg-primary section-standard snap-section">
             <div class="cnt-box">
-                <Philosophy />
+                <About />
             </div>
         </section>
 
-        <section id="services" class="bg-bg-secondary section-standard">
+        <section id="services" class="bg-bg-secondary section-standard snap-section">
             <div class="cnt-box">
                 <Services />
             </div>
         </section>
 
-        <section id="portfolio" class="bg-bg-primary section-standard">
+        <section id="portfolio" class="bg-bg-primary section-standard snap-section">
             <div class="cnt-box">
-                <div class="grid-port">{projects.slice(0, 3).map(p => <ProjectCard project={p} />)}</div>
+                <div class="mb-12 text-center w-full">
+                    <h2 class="text-3xl lg:text-5xl font-black uppercase tracking-tighter mb-4">Selected Work</h2>
+                    <div class="w-24 h-1 bg-accent-primary mx-auto"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full auto-rows-[300px]">
+                    {sortedProjects.map((project, index) => {
+                        // Logika Bento:
+                        // Pierwszy element: Duży kwadrat (2x2)
+                        // Czwarty element: Szeroki prostokąt (2x1)
+                        // Pozostałe: Standardowe (1x1)
+                        let bentoClass = "md:col-span-1 md:row-span-1";
+                        
+                        if (index === 0) {
+                            bentoClass = "md:col-span-2 md:row-span-2";
+                        } else if (index === 3) {
+                            bentoClass = "md:col-span-2 md:row-span-1";
+                        }
+
+                        return (
+                            <div class={`relative group overflow-hidden rounded-3xl ${bentoClass}`}>
+                                <ProjectCard project={project} class="h-full w-full" />
+                            </div>
+                        );
+                    })}
+                </div>
+                
+                <div class="mt-12 w-full text-center">
+                    <a href="/portfolio" class="inline-block border-b-2 border-current pb-1 font-bold tracking-widest hover:text-accent-primary hover:border-accent-primary transition-all">
+                        VIEW ALL PROJECTS
+                    </a>
+                </div>
             </div>
         </section>
 
-        <section id="contact" class="bg-bg-secondary section-standard relative">
-            <div class="cnt-box flex flex-col justify-center h-full w-full relative">
-                <div class="flex-grow flex items-center w-full">
+        <section id="contact" class="bg-bg-secondary section-standard relative snap-section flex flex-col">
+            <div class="cnt-box flex flex-col justify-center h-full w-full relative flex-grow">
+                <div class="flex-grow flex items-center justify-center w-full">
                     <Contact />
                 </div>
                 
                 <div class="w-full pt-12 border-t border-black/5 dark:border-white/5 mt-auto pb-6">
                     <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
                         <div class="text-sm text-text-secondary font-medium tracking-wide">
-                            Copyright ©2026 All rights reserved | created by: <span class="text-text-primary font-bold">Maciej Wochna</span>
+                            Copyright &copy; 2026 All rights reserved |
+                            created by: <span class="text-text-primary font-bold">Maciej Wochna</span>
                         </div>
-                        <div class="text-[10px] uppercase tracking-[2px] text-accent-primary/50 font-bold italic">
-                            No large language models were harmed during the design and implementation of this website.
+                        
+                        <div class="text-[10px] uppercase tracking-[1px] text-accent-primary/60 font-bold italic flex flex-col md:items-end">
+                            <span>No large language models were harmed</span>
+                            <span class="opacity-70">during the design and implementation of this website.</span>
                         </div>
                     </div>
                 </div>
@@ -52,27 +91,60 @@ const projects = await getCollection('work');
 </MainLayout>
 
 <style is:global>
-    section { width: 100%; min-height: 100dvh; height: auto; display: flex; align-items: center; justify-content: center; position: relative; }
-    #home { height: 100dvh !important; }
+    /* Podstawowy styl sekcji */
+    section { 
+        width: 100%;
+        min-height: 100dvh; 
+        height: auto; 
+        display: flex; 
+        flex-direction: column; /* Zmiana na column dla lepszego układu Bento */
+        align-items: center; 
+        justify-content: center; 
+        position: relative;
+        padding-top: 80px; /* Offset dla fixed navbar */
+        padding-bottom: 80px;
+    }
     
-    /* Unified Container - Content Centered */
-    .cnt-box { 
-        width: 100%; 
+    #home { 
+        height: 100dvh!important; 
+        padding: 0; /* Home slider nie potrzebuje paddingu */
+    }
+    
+   .cnt-box { 
+        width: 100%;
         max-width: 1400px; 
         margin: 0 auto; 
-        padding: 6rem 1.5rem; 
+        padding: 0 1.5rem; 
         display: flex; 
         flex-direction: column; 
         align-items: center; 
         justify-content: center;
+        height: 100%;
     }
-    
-    .grid-port { @apply grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-16 w-full; }
 
+    /* SCROLL SNAP PROXIMITY (Desktop) */
     @media (min-width: 1024px) {
-        html { scroll-snap-type: y mandatory; }
-        section { scroll-snap-align: start; scroll-snap-stop: always; height: 100vh; overflow: hidden; }
-        #portfolio, #contact, #about, #services { height: auto; min-height: 100vh; }
-        .cnt-box { padding: 0 1.5rem; height: 100%; }
+        html { 
+            /* Zmiana z 'mandatory' na 'proximity' dla lepszego UX */
+            scroll-snap-type: y proximity; 
+        }
+        
+        /* Klasa dodana do sekcji, które mają się przyciągać */
+       .snap-section { 
+            scroll-snap-align: start; 
+            scroll-snap-stop: normal;
+        }
+        
+        section {
+            /* Na desktopie sekcje mają min-height 100vh, ale mogą być wyższe */
+            height: auto;
+            min-height: 100vh;
+            padding-top: 100px; /* Większy offset na desktop */
+        }
+        
+        /* Home zawsze na pełny ekran */
+        #home {
+            height: 100vh!important;
+        }
     }
 </style>
