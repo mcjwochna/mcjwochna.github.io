@@ -1,7 +1,6 @@
 ---
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
 
 const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
 ---
@@ -38,8 +37,6 @@ const { title = "Maciej Wochna | Data Engineer" } = Astro.props;
     <main class="flex-grow">
         <slot />
     </main>
-
-    <Footer />
 
 </body>
 </html>

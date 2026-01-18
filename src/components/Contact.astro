@@ -9,17 +9,63 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
         
         <!-- LEWA STRONA: Formularz -->
-<form class="glass-card p-8 lg:p-10 rounded-3xl space-y-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <input type="text" class="w-full bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-primary focus:bg-white dark:focus:bg-black/40 transition-all placeholder:text-gray-400" placeholder="Your Name" />
-        <input type="email" class="w-full bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-primary focus:bg-white dark:focus:bg-black/40 transition-all placeholder:text-gray-400" placeholder="Your Email" />
-    </div>
-    <input type="text" class="w-full bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-primary focus:bg-white dark:focus:bg-black/40 transition-all placeholder:text-gray-400" placeholder="Project Inquiry" />
-    <textarea rows="5" class="w-full bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-primary focus:bg-white dark:focus:bg-black/40 transition-all placeholder:text-gray-400" placeholder="Hi Maciej, I would like to discuss a potential Data Engineering project with you..."></textarea>
-    <button type="submit" class="w-full bg-accent-primary text-white font-bold py-4 rounded-xl uppercase tracking-widest hover:bg-accent-primary/90 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-accent-primary/20">
-        Wyślij Wiadomość
-    </button>
-</form>
+        <form id="contact-form" class="glass-card p-8 lg:p-10 rounded-3xl space-y-4">
+            <!-- Honeypot - hidden from users, visible to bots -->
+            <input type="text" name="website" class="hidden" tabindex="-1" autocomplete="off">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <input 
+                        type="text" 
+                        name="name"
+                        required
+                        minlength="2"
+                        maxlength="100"
+                        class="w-full bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-primary focus:bg-white dark:focus:bg-black/40 transition-all placeholder:text-gray-400" 
+                        placeholder="Twoje imię" 
+                    />
+                </div>
+                <div>
+                    <input 
+                        type="email" 
+                        name="email"
+                        required
+                        class="w-full bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-primary focus:bg-white dark:focus:bg-black/40 transition-all placeholder:text-gray-400" 
+                        placeholder="Twój email" 
+                    />
+                </div>
+            </div>
+            
+            <input 
+                type="text" 
+                name="subject"
+                maxlength="200"
+                class="w-full bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-primary focus:bg-white dark:focus:bg-black/40 transition-all placeholder:text-gray-400" 
+                placeholder="Temat wiadomości" 
+            />
+            
+            <textarea 
+                name="message"
+                required
+                minlength="10"
+                maxlength="5000"
+                rows="5" 
+                class="w-full bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-primary focus:bg-white dark:focus:bg-black/40 transition-all placeholder:text-gray-400 resize-none" 
+                placeholder="Cześć Maciej, chciałbym omówić potencjalny projekt Data Engineering..."
+            ></textarea>
+            
+            <!-- Status message -->
+            <div id="form-status" class="hidden rounded-xl px-4 py-3 text-sm font-medium"></div>
+            
+            <button 
+                type="submit" 
+                id="submit-btn"
+                class="w-full bg-accent-primary text-white font-bold py-4 rounded-xl uppercase tracking-widest hover:bg-accent-primary/90 hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-accent-primary/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            >
+                <span id="btn-text">Wyślij Wiadomość</span>
+                <span id="btn-loading" class="hidden">Wysyłanie...</span>
+            </button>
+        </form>
 
         <!-- PRAWA STRONA: Dane kontaktowe -->
         <div class="glass-card p-8 lg:p-10 rounded-3xl flex flex-col justify-center gap-8 text-left h-full">
@@ -49,7 +95,7 @@
                     </div>
                     <div>
                         <p class="text-xs uppercase font-bold text-text-secondary tracking-widest mb-1">Email</p>
-                        <a href="mailto:maciej.wochna@gmail.com" class="text-lg font-bold hover:text-accent-primary transition-colors">maciej.wochna@gmail.com</a>
+                        <a href="mailto:kontakt@in2data.pl" class="text-lg font-bold hover:text-accent-primary transition-colors">kontakt@in2data.pl</a>
                     </div>
                 </div>
                 
@@ -60,20 +106,18 @@
                     </div>
                     <div>
                         <p class="text-xs uppercase font-bold text-text-secondary tracking-widest mb-1">LinkedIn</p>
-                        <a href="https://linkedin.com/in/maciejwochna" class="text-lg font-bold hover:text-accent-primary transition-colors">/in/maciejwochna</a>
+                        <a href="https://linkedin.com/in/maciejwochna" target="_blank" rel="noopener" class="text-lg font-bold hover:text-accent-primary transition-colors">/in/maciejwochna</a>
                     </div>
                 </div>
 
-                <!-- Website -->
+                <!-- GitHub -->
                 <div class="flex items-start gap-5 group">
                     <div class="w-12 h-12 rounded-2xl bg-accent-primary/10 flex items-center justify-center text-accent-primary group-hover:scale-110 transition-transform duration-300">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
-                        </svg>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                     </div>
                     <div>
-                        <p class="text-xs uppercase font-bold text-text-secondary tracking-widest mb-1">Strona</p>
-                        <a href="https://maciejwochna.pl" class="text-lg font-bold hover:text-accent-primary transition-colors">maciejwochna.pl</a>
+                        <p class="text-xs uppercase font-bold text-text-secondary tracking-widest mb-1">GitHub</p>
+                        <a href="https://github.com/mcjwochna" target="_blank" rel="noopener" class="text-lg font-bold hover:text-accent-primary transition-colors">/mcjwochna</a>
                     </div>
                 </div>
             </div>
@@ -96,26 +140,86 @@
         border: 1px solid rgba(255, 255, 255, 0.08);
         box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
     }
-</style>
-
-<style>
-    /* Stylizacja Glassmorphism - Klucz do efektu Apple */
-   .glass-card {
-        /* Baza dla trybu jasnego: biały z dużą przezroczystością */
-        background: rgba(255, 255, 255, 0.6);
-        /* Efekt rozmycia tła pod spodem */
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        /* Subtelny border imitujący krawędź szkła */
-        border: 1px solid rgba(255, 255, 255, 0.6);
-        /* Cień dla głębi */
-        box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
+    
+    .hidden {
+        display: none !important;
     }
     
-    /* Wariant dla trybu ciemnego */
-    :global(.dark).glass-card {
-        background: rgba(20, 20, 20, 0.4);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+    #form-status.success {
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        color: rgb(16, 185, 129);
+    }
+    
+    #form-status.error {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: rgb(239, 68, 68);
     }
 </style>
+
+<script>
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+    const btnText = document.getElementById('btn-text') as HTMLSpanElement;
+    const btnLoading = document.getElementById('btn-loading') as HTMLSpanElement;
+    const formStatus = document.getElementById('form-status') as HTMLDivElement;
+    
+    // API endpoint - zmień na produkcyjny URL po wdrożeniu
+    const API_URL = 'https://in2data.pl/contact.php';
+    
+    function setLoading(loading: boolean): void {
+        submitBtn.disabled = loading;
+        btnText.classList.toggle('hidden', loading);
+        btnLoading.classList.toggle('hidden', !loading);
+    }
+    
+    function showStatus(type: 'success' | 'error', message: string): void {
+        formStatus.textContent = message;
+        formStatus.className = `rounded-xl px-4 py-3 text-sm font-medium ${type}`;
+        formStatus.classList.remove('hidden');
+    }
+    
+    function hideStatus(): void {
+        formStatus.classList.add('hidden');
+    }
+    
+    form.addEventListener('submit', async (e: Event) => {
+        e.preventDefault();
+        hideStatus();
+        setLoading(true);
+        
+        const formData = new FormData(form);
+        const data = {
+            name: formData.get('name') as string,
+            email: formData.get('email') as string,
+            subject: formData.get('subject') as string || 'Zapytanie ze strony',
+            message: formData.get('message') as string,
+            website: formData.get('website') as string, // honeypot
+        };
+        
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok && result.status === 'success') {
+                showStatus('success', result.message);
+                form.reset();
+            } else {
+                showStatus('error', result.message || 'Wystąpił błąd. Spróbuj ponownie.');
+            }
+        } catch (error) {
+            console.error('Contact form error:', error);
+            showStatus('error', 'Nie udało się połączyć z serwerem. Sprawdź połączenie internetowe.');
+        } finally {
+            setLoading(false);
+        }
+    });
+</script>

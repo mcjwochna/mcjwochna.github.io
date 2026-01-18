@@ -6,6 +6,7 @@ import About from '../components/About.astro';
 import Services from '../components/Services.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
 
 // Pobranie projektów (zakładamy, że jest ich co najmniej 4-5 dla efektu Bento)
 const projects = await getCollection('work');
@@ -66,26 +67,11 @@ const sortedProjects = projects.sort((a, b) => a.data.priority - b.data.priority
             </div>
         </section>
 
-        <section id="contact" class="bg-bg-secondary section-standard relative snap-section flex flex-col">
-            <div class="cnt-box flex flex-col justify-center h-full w-full relative flex-grow">
-                <div class="flex-grow flex items-center justify-center w-full">
-                    <Contact />
-                </div>
-                
-                <div class="w-full pt-12 border-t border-black/5 dark:border-white/5 mt-auto pb-6">
-                    <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
-                        <div class="text-sm text-text-secondary font-medium tracking-wide">
-                            Copyright &copy; 2026 All rights reserved |
-                            created by: <span class="text-text-primary font-bold">Maciej Wochna</span>
-                        </div>
-                        
-                        <div class="text-[10px] uppercase tracking-[1px] text-accent-primary/60 font-bold italic flex flex-col md:items-end">
-                            <span>No large language models were harmed</span>
-                            <span class="opacity-70">during the design and implementation of this website.</span>
-                        </div>
-                    </div>
-                </div>
+        <section id="contact" class="bg-bg-secondary relative snap-section flex flex-col">
+            <div class="cnt-box flex items-center justify-center flex-grow py-20">
+                <Contact />
             </div>
+            <Footer />
         </section>
     </main>
 </MainLayout>
@@ -97,20 +83,25 @@ const sortedProjects = projects.sort((a, b) => a.data.priority - b.data.priority
         min-height: 100dvh; 
         height: auto; 
         display: flex; 
-        flex-direction: column; /* Zmiana na column dla lepszego układu Bento */
+        flex-direction: column;
         align-items: center; 
         justify-content: center; 
         position: relative;
-        padding-top: 80px; /* Offset dla fixed navbar */
-        padding-bottom: 80px;
+        padding-top: 80px;
+        padding-bottom: 0;
     }
     
     #home { 
         height: 100dvh!important; 
-        padding: 0; /* Home slider nie potrzebuje paddingu */
+        padding: 0;
     }
     
-   .cnt-box { 
+    #contact {
+        justify-content: space-between;
+        padding-bottom: 0;
+    }
+    
+    .cnt-box { 
         width: 100%;
         max-width: 1400px; 
         margin: 0 auto; 
@@ -119,30 +110,25 @@ const sortedProjects = projects.sort((a, b) => a.data.priority - b.data.priority
         flex-direction: column; 
         align-items: center; 
         justify-content: center;
-        height: 100%;
     }
 
     /* SCROLL SNAP PROXIMITY (Desktop) */
     @media (min-width: 1024px) {
         html { 
-            /* Zmiana z 'mandatory' na 'proximity' dla lepszego UX */
             scroll-snap-type: y proximity; 
         }
         
-        /* Klasa dodana do sekcji, które mają się przyciągać */
-       .snap-section { 
+        .snap-section { 
             scroll-snap-align: start; 
             scroll-snap-stop: normal;
         }
         
         section {
-            /* Na desktopie sekcje mają min-height 100vh, ale mogą być wyższe */
             height: auto;
             min-height: 100vh;
-            padding-top: 100px; /* Większy offset na desktop */
+            padding-top: 100px;
         }
         
-        /* Home zawsze na pełny ekran */
         #home {
             height: 100vh!important;
         }
