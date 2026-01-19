@@ -1,35 +1,31 @@
 ---
-import { principles } from '../data/about';
+import { principles, bio } from '../data/about';
 ---
 <div>
-    <!-- Nagłówek sekcji About -->
+    <!-- Section header -->
     <div class="flex items-center gap-4 mb-16">
-        <span class="text-accent-primary font-mono text-sm">02. About</span>
+        <span class="text-accent-primary font-mono text-sm">01. About</span>
         <div class="h-[1px] bg-bg-secondary flex-1"></div>
     </div>
     
-    <!-- Tekst o sobie -->
+    <!-- Bio text -->
     <div class="max-w-3xl mb-20">
         <p class="text-text-secondary text-lg leading-relaxed">
-            Jestem Data Engineerem z doświadczeniem w budowaniu pipeline'ów ETL/ELT 
-            oraz rozwiązań analitycznych w ekosystemie Microsoft — od SQL Server, 
-            przez Azure Synapse, po Microsoft Fabric i Power BI. Koncentruję się 
-            na dostarczaniu czystych, skalowalnych architektur danych, które 
-            przekładają się na realne wartości biznesowe.
+            {bio}
         </p>
     </div>
     
-    <!-- Podtytuł My Principles -->
+    <!-- Principles subheader -->
     <div class="flex items-center gap-4 mb-12">
         <span class="text-accent-primary font-mono text-sm">My Principles</span>
         <div class="h-[1px] bg-bg-secondary flex-1"></div>
     </div>
     
-    <!-- Grid z zasadami -->
+    <!-- Principles grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
         {principles.map((p, index) => (
             <div class="group">
-                <span class="text-bg-secondary font-black text-6xl block mb-6 group-hover:text-accent-primary/20 transition-colors">
+                <span class="text-accent-primary/20 font-black text-6xl block mb-6">
                     0{index + 1}
                 </span>
                 <h3 class="text-xl font-bold mb-4 italic">{p.title}</h3>
