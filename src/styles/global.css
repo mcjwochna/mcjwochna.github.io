@@ -18,7 +18,7 @@
     --text-secondary: #525252;
     
     /* Accent color */
-    --accent-primary: #10b981; /* Emerald 500 */
+    --accent-primary: #10b981; 
     
     /* Responsive spacing base */
     --section-padding-y: clamp(4rem, 8vh, 6rem);
