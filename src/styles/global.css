@@ -1,4 +1,4 @@
-/* global.css - Responsive scaling for 100% zoom optimization */
+/* global.css - REFACTORED VERSION */
 
 @tailwind base;
 @tailwind components;
@@ -18,9 +18,16 @@
     --text-secondary: #525252;
     
     /* Accent color */
-    --accent-primary: #10b981; 
+    --accent-primary: #10b981;
+    --accent-text-safe: #059669; /* Darker for WCAG AA on white */
     
-    /* Responsive spacing base */
+    /* NEW: Semantic feedback colors */
+    --color-success: #10b981;
+    --color-error: #ef4444;
+    --color-warning: #f59e0b;
+    --color-info: #3b82f6;
+    
+    /* Responsive spacing */
     --section-padding-y: clamp(4rem, 8vh, 6rem);
     --content-max-width: min(1200px, 90vw);
 }
@@ -31,10 +38,17 @@
     --bg-tertiary: #262626;
     --text-primary: #fafafa;
     --text-secondary: #a3a3a3;
+    --accent-text-safe: #10b981;
+    
+    /* Semantic colors - adjusted for dark mode */
+    --color-success: #34d399;
+    --color-error: #f87171;
+    --color-warning: #fbbf24;
+    --color-info: #60a5fa;
 }
 
 /* ==========================================
-   Base Layer - Typography & Scaling
+   Base Layer - Typography & Accessibility
    ========================================== */
 @layer base {
     html {
@@ -74,10 +88,26 @@
         font-size: clamp(0.9rem, 1.5vw, 1rem);
     }
     
-    /* Selection color */
     ::selection {
         background-color: var(--accent-primary);
         color: white;
+    }
+    
+    /* NEW: ACCESSIBILITY - Focus indicators (WCAG 2.4.7) */
+    *:focus-visible {
+        outline: 2px solid var(--accent-primary);
+        outline-offset: 2px;
+        border-radius: 2px;
+    }
+    
+    *:focus:not(:focus-visible) {
+        outline: none;
+    }
+    
+    button:focus-visible,
+    a:focus-visible {
+        outline: 2px solid var(--accent-primary);
+        outline-offset: 3px;
     }
 }
 
@@ -85,7 +115,6 @@
    Component Layer - Reusable Patterns
    ========================================== */
 @layer components {
-    /* Section standard layout */
     .section-standard {
         width: 100%;
         min-height: 100dvh;
@@ -97,7 +126,6 @@
         padding-bottom: var(--section-padding-y);
     }
     
-    /* Content container with responsive max-width */
     .cnt-box {
         width: 100%;
         max-width: var(--content-max-width);
@@ -106,7 +134,6 @@
         padding-right: clamp(1rem, 4vw, 1.5rem);
     }
     
-    /* Glassmorphism card */
     .glass-card {
         background: rgba(255, 255, 255, 0.6);
         backdrop-filter: blur(20px);
@@ -121,12 +148,10 @@
         box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
     }
     
-    /* Accent text */
     .text-accent {
         color: var(--accent-primary);
     }
     
-    /* Section header pattern */
     .section-header {
         text-align: center;
         margin-bottom: clamp(2rem, 5vh, 4rem);
@@ -148,34 +173,54 @@
         background-color: var(--accent-primary);
         margin: 1rem auto 0;
     }
+    
+    /* NEW: Form status states */
+    .status-success {
+        background: color-mix(in srgb, var(--color-success) 10%, transparent);
+        border: 1px solid color-mix(in srgb, var(--color-success) 30%, transparent);
+        color: var(--color-success);
+    }
+    
+    .status-error {
+        background: color-mix(in srgb, var(--color-error) 10%, transparent);
+        border: 1px solid color-mix(in srgb, var(--color-error) 30%, transparent);
+        color: var(--color-error);
+    }
+    
+    .status-warning {
+        background: color-mix(in srgb, var(--color-warning) 10%, transparent);
+        border: 1px solid color-mix(in srgb, var(--color-warning) 30%, transparent);
+        color: var(--color-warning);
+    }
+    
+    .field-error {
+        border-color: var(--color-error) !important;
+    }
+    
+    .error-message {
+        color: var(--color-error);
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        display: none;
+    }
+    
+    .error-message.visible {
+        display: block;
+    }
 }
 
 /* ==========================================
    Utility Layer - Custom Utilities
    ========================================== */
 @layer utilities {
-    /* Background colors */
-    .bg-bg-primary { background-color: var(--bg-primary); }
-    .bg-bg-secondary { background-color: var(--bg-secondary); }
-    .bg-bg-tertiary { background-color: var(--bg-tertiary); }
+    /* REMOVED: Redundant utilities (Tailwind generates these via config)
+       Previously lines 150-169 in original file
+       Now handled by tailwind.config.mjs colors mapping */
     
-    /* Text colors */
-    .text-text-primary { color: var(--text-primary); }
-    .text-text-secondary { color: var(--text-secondary); }
-    .text-accent-primary { color: var(--accent-primary); }
-    
-    /* Accent background */
-    .bg-accent-primary { background-color: var(--accent-primary); }
-    
-    /* Border accent */
-    .border-accent-primary { border-color: var(--accent-primary); }
-    
-    /* Responsive gap */
     .gap-responsive {
         gap: clamp(1rem, 3vw, 2rem);
     }
     
-    /* Hide scrollbar utility */
     .scrollbar-hide {
         scrollbar-width: none;
         -ms-overflow-style: none;
@@ -184,7 +229,6 @@
         display: none;
     }
     
-    /* Smooth transitions */
     .transition-theme {
         transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
@@ -193,14 +237,11 @@
 /* ==========================================
    Media Queries - Breakpoint Adjustments
    ========================================== */
-
-/* Large screens - ensure content doesn't overflow at 100% zoom */
 @media (min-width: 1024px) {
     :root {
         --section-padding-y: clamp(5rem, 10vh, 8rem);
     }
     
-    /* Scroll snap behavior */
     html {
         scroll-snap-type: y proximity;
     }
@@ -211,22 +252,19 @@
     }
 }
 
-/* Extra large screens - cap maximum sizes */
 @media (min-width: 1440px) {
     :root {
-        --content-max-width: 1200px; /* Hard cap */
+        --content-max-width: 1200px;
     }
     
     html {
-        /* Prevent text from getting too large on 4K monitors */
         font-size: 16px;
     }
 }
 
-/* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
     html {
-        scroll-behavior: auto;
+        scroll-behavior: auto !important;
     }
     
     *,
@@ -235,12 +273,10 @@
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
 
-/* ==========================================
-   Print Styles
-   ========================================== */
 @media print {
     .glass-card {
         background: white;
