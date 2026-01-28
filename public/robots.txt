@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://maciejwochna.pl/sitemap-index.xml
+
+# Allow crawlers to access CSS and JS
+Allow: /*.css$
+Allow: /*.js$
+
+# Crawl-delay (optional - prevents aggressive crawling)
+Crawl-delay: 1
