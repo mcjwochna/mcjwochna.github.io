@@ -1,0 +1,116 @@
+---
+---
+<section id="home" class="relative h-[100dvh] w-full overflow-hidden bg-bg-primary transition-colors duration-500 snap-section">
+    <div id="slider-track" class="h-full w-full relative">
+        
+        <div class="slide absolute inset-0 opacity-100 transition-opacity duration-1000 z-10" data-active>
+            <div class="absolute inset-0 bg-cover bg-center lg:bg-right lg:w-[65%] lg:left-[35%] lg:[clip-path:polygon(12%_0,100%_0,100%_100%,0%_100%)]" 
+                 style="background-image: url('/profile.jpg');">
+                <div class="absolute inset-0 bg-black/50 lg:bg-black/10 transition-all"></div>
+            </div>
+            
+            <div class="relative h-full flex flex-col justify-end lg:justify-center items-center lg:items-start px-6 lg:pl-24 pb-32 lg:pb-0 z-30 lg:w-[60%] text-center lg:text-left">
+                <div class="bg-black/40 lg:bg-transparent p-6 rounded-2xl backdrop-blur-sm lg:backdrop-blur-none mb-8 lg:mb-0 max-w-[90%] lg:max-w-none">
+                    <span class="text-accent-primary font-bold tracking-[4px] uppercase mb-4 text-xs lg:text-sm block animate-fade-in">
+                        Hi! I'm Maciej
+                    </span>
+                    <h1 class="text-3xl lg:text-5xl font-black mb-8 leading-tight uppercase text-white lg:text-text-primary transition-colors tracking-tighter animate-slide-up">
+                        Data Engineer <br> & BI Developer
+                    </h1>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto h-auto min-h-[140px] lg:min-h-0 animate-fade-in-delay">
+                    <a href="#contact" class="px-10 py-4 bg-accent-primary text-white rounded-full font-bold uppercase tracking-widest text-center shadow-lg hover:bg-opacity-90 transition-all">
+                        Hire Me
+                    </a>
+                    <a href="/cv-maciej-wochna.pdf" download class="px-10 py-4 border-2 border-accent-primary text-accent-primary rounded-full font-bold uppercase tracking-widest text-center bg-bg-primary/20 lg:bg-transparent hover:bg-accent-primary hover:text-white transition-all">
+                        Download CV
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide absolute inset-0 opacity-0 transition-opacity duration-1000 z-10 pointer-events-none">
+            <div class="absolute inset-0 bg-cover bg-center lg:bg-right lg:w-[65%] lg:left-[35%] lg:[clip-path:polygon(12%_0,100%_0,100%_100%,0%_100%)]" 
+                 style="background-image: url('/profile2.jpg');">
+                <div class="absolute inset-0 bg-black/50 lg:bg-black/10 transition-all"></div>
+            </div>
+            
+            <div class="relative h-full flex flex-col justify-end lg:justify-center items-center lg:items-start px-6 lg:pl-24 pb-32 lg:pb-0 z-30 lg:w-[70%] text-center lg:text-left">
+                <div class="bg-black/40 lg:bg-transparent p-6 rounded-2xl backdrop-blur-sm lg:backdrop-blur-none mb-8 lg:mb-0 max-w-[90%] lg:max-w-none">
+                    <span class="text-accent-primary font-bold tracking-[4px] uppercase mb-4 text-xs lg:text-sm block">
+                        Hi! I'm Maciej
+                    </span>
+                    <h1 class="text-3xl lg:text-5xl font-black mb-8 leading-tight uppercase text-white lg:text-text-primary transition-colors tracking-tighter">
+                        I transform data and <br> create meaningful reports.
+                    </h1>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto h-auto min-h-[140px] lg:min-h-0">
+                    <a href="#contact" class="px-10 py-4 bg-accent-primary text-white rounded-full font-bold uppercase tracking-widest text-center shadow-lg hover:bg-opacity-90 transition-all">
+                        Hire Me
+                    </a>
+                    <a href="/cv-maciej-wochna.pdf" download class="px-10 py-4 border-2 border-accent-primary text-accent-primary rounded-full font-bold uppercase tracking-widest text-center bg-bg-primary/20 lg:bg-transparent hover:bg-accent-primary hover:text-white transition-all">
+                        Download CV
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="prev-slide" class="absolute left-4 top-1/2 -translate-y-1/2 z-50 w-12 h-12 flex items-center justify-center border border-white/30 text-white hover:bg-accent-primary rounded-full transition-all bg-black/10 backdrop-blur-md" aria-label="Previous Slide">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+    </button>
+    <button id="next-slide" class="absolute right-4 top-1/2 -translate-y-1/2 z-50 w-12 h-12 flex items-center justify-center border border-white/30 text-white hover:bg-accent-primary rounded-full transition-all bg-black/10 backdrop-blur-md" aria-label="Next Slide">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+    </button>
+</section>
+
+<style>
+    /* Proste animacje wejścia dla tekstu */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+   .animate-fade-in { animation: fadeInUp 0.8s ease-out forwards; }
+   .animate-slide-up { animation: fadeInUp 0.8s ease-out 0.2s forwards; opacity: 0; }
+   .animate-fade-in-delay { animation: fadeInUp 0.8s ease-out 0.4s forwards; opacity: 0; }
+</style>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    const nextBtn = document.getElementById('next-slide');
+    const prevBtn = document.getElementById('prev-slide');
+    let currentSlide = 0;
+
+    function updateSlider(newIndex) {
+        slides.forEach((slide, i) => {
+            const isCurrent = i === newIndex;
+            slide.classList.toggle('opacity-100', isCurrent);
+            slide.classList.toggle('opacity-0',!isCurrent);
+            slide.classList.toggle('pointer-events-none',!isCurrent);
+            
+            // Opcjonalne: resetowanie animacji tekstu przy zmianie slajdu
+            if (isCurrent) {
+                const animatedElements = slide.querySelectorAll('[class*="animate-"]');
+                animatedElements.forEach(el => {
+                    el.style.animation = 'none';
+                    el.offsetHeight; /* trigger reflow */
+                    el.style.animation = null; 
+                });
+            }
+        });
+        currentSlide = newIndex;
+    }
+
+    // Event Listeners - tylko manualna nawigacja (Brak setInterval)
+    if (nextBtn && prevBtn) {
+        nextBtn.addEventListener('click', () => {
+            updateSlider((currentSlide + 1) % slides.length);
+        });
+        
+        prevBtn.addEventListener('click', () => {
+            updateSlider((currentSlide - 1 + slides.length) % slides.length);
+        });
+    }
+</script>

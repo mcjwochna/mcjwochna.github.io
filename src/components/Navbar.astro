@@ -1,0 +1,171 @@
+<header id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300">
+    <div class="w-full px-6 lg:px-8 h-20 flex justify-between items-center">
+        
+        <a href="/#home" class="text-lg lg:text-xl font-black tracking-tighter uppercase text-text-primary transition-colors">
+            Maciej Wochna <span class="text-accent-primary">In2data</span>
+        </a>
+
+        <button id="mobile-menu-btn" class="lg:hidden text-sm font-bold tracking-widest uppercase focus:outline-none text-text-primary p-2">
+            MENU
+        </button>
+
+        <nav id="nav-container" class="fixed inset-0 bg-white/95 dark:bg-black backdrop-blur-xl flex flex-col justify-center items-center gap-8 translate-x-full transition-transform duration-500 lg:translate-x-0 lg:static lg:bg-transparent lg:dark:bg-transparent lg:backdrop-blur-none lg:flex-row lg:h-auto z-50">
+            
+            <ul class="flex flex-col lg:flex-row items-center gap-6 lg:gap-1 text-xl lg:text-xs font-bold tracking-widest uppercase">
+                <li>
+                    <a href="/#home" data-section="home" class="nav-link relative px-4 py-2 rounded-full transition-all duration-300 text-text-primary hover:text-accent-primary">
+                        Home
+                        <span class="nav-underline absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-accent-primary transition-all duration-300"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/#about" data-section="about" class="nav-link relative px-4 py-2 rounded-full transition-all duration-300 text-text-primary hover:text-accent-primary">
+                        About
+                        <span class="nav-underline absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-accent-primary transition-all duration-300"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/#services" data-section="services" class="nav-link relative px-4 py-2 rounded-full transition-all duration-300 text-text-primary hover:text-accent-primary">
+                        Services
+                        <span class="nav-underline absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-accent-primary transition-all duration-300"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/#portfolio" data-section="portfolio" class="nav-link relative px-4 py-2 rounded-full transition-all duration-300 text-text-primary hover:text-accent-primary">
+                        Portfolio
+                        <span class="nav-underline absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-accent-primary transition-all duration-300"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/#contact" data-section="contact" class="nav-link relative px-4 py-2 rounded-full transition-all duration-300 text-text-primary hover:text-accent-primary">
+                        Contact
+                        <span class="nav-underline absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-accent-primary transition-all duration-300"></span>
+                    </a>
+                </li>
+            </ul>
+
+                <button id="theme-toggle" class="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-300 dark:border-slate-600 bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-800 dark:text-gray-200 transition-all duration-300" aria-label="Toggle Theme">
+    
+                    <svg class="hidden dark:block w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
+                    </svg>
+                    <svg class="block dark:hidden w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+                    </svg>
+                    <span class="text-xs font-bold tracking-wider uppercase hidden dark:inline text-gray-200">Light</span>
+                    <span class="text-xs font-bold tracking-wider uppercase dark:hidden text-gray-800">Dark</span>
+                </button>
+        </nav>
+    </div>
+    
+    <div id="navbar-bg" class="absolute inset-0 bg-white/70 dark:bg-black/90 backdrop-blur-xl dark:backdrop-blur-none -z-10"></div>
+</header>
+
+<style>
+    /* Active state - pill background */
+    .nav-link.active {
+        background-color: rgb(16 185 129 / 0.15); /* accent-primary with opacity */
+        color: rgb(16 185 129); /* accent-primary */
+    }
+    
+    /* Hover underline expansion */
+    .nav-link:hover .nav-underline {
+        width: 60%;
+    }
+    
+    /* Active link doesn't need underline */
+    .nav-link.active .nav-underline {
+        width: 0;
+    }
+</style>
+
+<script>
+    // Theme toggle logic
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    themeToggleBtn?.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        const isDark = document.documentElement.classList.contains('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+
+    // Mobile menu logic
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const navContainer = document.getElementById('nav-container');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    mobileBtn?.addEventListener('click', () => {
+        const isOpen = !navContainer?.classList.contains('translate-x-full');
+        if (isOpen) {
+            navContainer?.classList.add('translate-x-full');
+            document.body.style.overflow = 'auto';
+            if (mobileBtn) mobileBtn.innerText = 'MENU';
+        } else {
+            navContainer?.classList.remove('translate-x-full');
+            document.body.style.overflow = 'hidden';
+            if (mobileBtn) mobileBtn.innerText = 'CLOSE';
+        }
+    });
+
+    // Close menu when clicking nav links
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navContainer?.classList.add('translate-x-full');
+            document.body.style.overflow = 'auto';
+            if (mobileBtn) mobileBtn.innerText = 'MENU';
+        });
+    });
+
+    // NEW: Close menu when clicking outside (backdrop)
+    navContainer?.addEventListener('click', (e) => {
+        // Only close if click was on backdrop (navContainer itself), not children
+        if (e.target === navContainer) {
+            navContainer.classList.add('translate-x-full');
+            document.body.style.overflow = 'auto';
+            if (mobileBtn) mobileBtn.innerText = 'MENU';
+        }
+    });
+
+    // NEW: Close menu with ESC key (accessibility)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !navContainer?.classList.contains('translate-x-full')) {
+            navContainer?.classList.add('translate-x-full');
+            document.body.style.overflow = 'auto';
+            if (mobileBtn) mobileBtn.innerText = 'MENU';
+        }
+    });
+
+    // Active section detection (ScrollSpy)
+    const sections = document.querySelectorAll('section[id]');
+    
+    const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -70% 0px', // Trigger when section is ~20% from top
+        threshold: 0
+    };
+
+    const observerCallback = (entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const sectionId = entry.target.getAttribute('id');
+                
+                // Remove active from all links
+                navLinks.forEach(link => link.classList.remove('active'));
+                
+                // Add active to matching link
+                const activeLink = document.querySelector(`.nav-link[data-section="${sectionId}"]`);
+                activeLink?.classList.add('active');
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+    // Set initial active state based on hash or default to home
+    const initialSection = window.location.hash.slice(1) || 'home';
+    const initialLink = document.querySelector(`.nav-link[data-section="${initialSection}"]`);
+    initialLink?.classList.add('active');
+</script>

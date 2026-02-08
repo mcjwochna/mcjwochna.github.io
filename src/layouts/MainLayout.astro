@@ -1,0 +1,108 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+const { title = "Maciej Wochna | Data Engineer & BI Developer" } = Astro.props;
+
+// SEO defaults
+const description = "Specializing in ETL/ELT pipelines, data modeling, and Power BI dashboards. Microsoft Fabric | Azure Synapse | SQL Server.";
+const ogImage = "/og-image.jpg";
+const canonicalURL = new URL(Astro.url.pathname, 'https://maciejwochna.pl');
+---
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="author" content="Maciej Wochna" />
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, 'https://maciejwochna.pl')} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Maciej Wochna - Data Engineer Portfolio" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, 'https://maciejwochna.pl')} />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Structured Data (Schema.org) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Maciej Wochna",
+      "jobTitle": "Data Engineer",
+      "url": "https://maciejwochna.pl",
+      "sameAs": [
+        // ========================================
+        // LINKEDIN_CONFIG - Change LinkedIn URL here
+        // ========================================
+        "https://linkedin.com/in/wochnamaciej",
+        // ========================================
+        "https://github.com/mcjwochna"
+      ],
+      "knowsAbout": [
+        "Power BI",
+        "Azure Synapse",
+        "Microsoft Fabric",
+        "SQL Server",
+        "ETL/ELT",
+        "Data Modeling",
+        "Business Intelligence"
+      ],
+      // ========================================
+      // EMAIL_CONFIG - Change email here
+      // ========================================
+      "email": "kontakt@mwochna.pl",
+      // Alternative: "kontakt@in2data.pl"
+      // ========================================
+      "telephone": "+48603234834",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "PL"
+      }
+    })} />
+    
+    <!-- Dark mode persistence script (UNCHANGED - working correctly) -->
+    <script is:inline>
+        const getTheme = () => {
+            if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+                return localStorage.getItem('theme');
+            }
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            return 'light';
+        };
+        const theme = getTheme();
+        if (theme === 'light') {
+            document.documentElement.classList.remove('dark');
+        } else {
+            document.documentElement.classList.add('dark');
+        }
+        window.localStorage.setItem('theme', theme);
+    </script>
+</head>
+<body class="bg-bg-primary text-text-primary antialiased overflow-x-hidden flex flex-col min-h-screen transition-colors duration-300 selection:bg-accent-primary selection:text-white">
+    
+    <Navbar />
+    
+    <main class="flex-grow">
+        <slot />
+    </main>
+</body>
+</html>

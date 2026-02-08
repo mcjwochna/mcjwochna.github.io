@@ -1,0 +1,275 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../layouts/MainLayout.astro';
+import HomeSlider from '../components/HomeSlider.astro';
+import About from '../components/About.astro';
+import Services from '../components/Services.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Contact from '../components/Contact.astro';
+
+// Get projects sorted by priority, limit to 3 for carousel
+const projects = await getCollection('work');
+const sortedProjects = projects.sort((a, b) => a.data.priority - b.data.priority).slice(0, 3); 
+---
+
+<MainLayout title="Maciej Wochna | Data Engineer">
+    <main class="snap-container">
+        <HomeSlider />
+        
+        <section id="about" class="bg-bg-primary section-standard snap-section">
+            <div class="cnt-box">
+                <About />
+            </div>
+        </section>
+
+        <section id="services" class="bg-bg-secondary section-standard snap-section">
+            <div class="cnt-box">
+                <Services />
+            </div>
+        </section>
+
+        <!-- Portfolio section with horizontal scroll carousel -->
+        <section id="portfolio" class="bg-bg-primary section-standard snap-section pb-16 lg:pb-24"></>
+            <div class="cnt-box">
+                <!-- Section header -->
+                <div class="mb-12 text-center w-full">
+                    <span class="text-accent-primary font-mono text-sm tracking-widest uppercase block mb-4">Portfolio</span>
+                    <h2 class="text-3xl lg:text-4xl font-black uppercase tracking-tighter mb-4">Selected Work</h2>
+                    <div class="w-16 h-0.5 bg-accent-primary mx-auto"></div>
+                </div>
+
+                <!-- Horizontal scroll container -->
+                <div class="portfolio-carousel-wrapper w-full relative">
+                    <!-- Navigation arrows (desktop) -->
+                    <button 
+                        id="carousel-prev" 
+                        class="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 w-12 h-12 items-center justify-center rounded-full bg-white dark:bg-black/80 border border-gray-200 dark:border-white/10 shadow-lg hover:bg-accent-primary hover:text-white hover:border-accent-primary transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
+                        aria-label="Previous project"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                    </button>
+                    
+                    <button 
+                        id="carousel-next" 
+                        class="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-20 w-12 h-12 items-center justify-center rounded-full bg-white dark:bg-black/80 border border-gray-200 dark:border-white/10 shadow-lg hover:bg-accent-primary hover:text-white hover:border-accent-primary transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
+                        aria-label="Next project"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+
+                    <!-- Carousel track -->
+                    <div 
+                        id="portfolio-carousel" 
+                        class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 -mx-6 px-6 lg:mx-0 lg:px-0 lg:overflow-hidden"
+                    >
+                        {sortedProjects.map((project) => (
+                            <div class="portfolio-card flex-shrink-0 w-[85vw] sm:w-[70vw] lg:w-[calc(33.333%-1rem)] snap-center">
+                                <div class="h-[400px] lg:h-[450px]">
+                                    <ProjectCard project={project} />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <!-- Dots indicator -->
+                    <div class="flex justify-center gap-2 mt-8">
+                        {sortedProjects.map((_, index) => (
+                            <button 
+                                class="carousel-dot w-2 h-2 rounded-full bg-gray-300 dark:bg-white/20 transition-all duration-300 hover:bg-accent-primary"
+                                data-index={index}
+                                aria-label={`Go to project ${index + 1}`}
+                            />
+                        ))}
+                    </div>
+                </div>
+
+                <!-- Section separator -->
+                <div class="mt-12 lg:mt-16 w-full flex flex-col items-center gap-4">
+                    <div class="w-px h-10 bg-gradient-to-b from-transparent via-accent-primary/30 to-transparent"></div>
+                    <p class="text-text-secondary text-xs tracking-wide">
+                        Ready to collaborate?
+                    </p>
+                    <div class="w-px h-10 bg-gradient-to-b from-transparent via-accent-primary/30 to-transparent"></div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="contact" class="bg-bg-secondary section-standard relative snap-section flex flex-col">
+            <div class="cnt-box flex flex-col justify-center h-full w-full relative flex-grow">
+                <div class="flex-grow flex items-center justify-center w-full">
+                    <Contact />
+                </div>
+                
+                <div class="w-full pt-8 border-t border-black/5 dark:border-white/5 mt-auto pb-4">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+                        <div class="text-xs text-text-secondary font-medium tracking-wide">
+                            Copyright &copy; 2026 All rights reserved |
+                            created by: <span class="text-text-primary font-bold">Maciej Wochna</span>
+                        </div>
+                        
+                        <div class="text-[9px] uppercase tracking-[1px] text-accent-primary/50 font-bold italic flex flex-col md:items-end">
+                            <span>No large language models were harmed</span>
+                            <span class="opacity-70">during the design and implementation of this website.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</MainLayout>
+
+<style is:global>
+    /* Base section styling - optimized for 100% zoom */
+    section { 
+        width: 100%;
+        min-height: 100dvh; 
+        height: auto; 
+        display: flex; 
+        flex-direction: column;
+        align-items: center; 
+        justify-content: center; 
+        position: relative;
+        padding-top: 5rem; /* 80px */
+        padding-bottom: 5rem;
+    }
+    
+    #home { 
+        height: 100dvh !important; 
+        padding: 0;
+    }
+    
+    /* Content box - reduced max-width for better 100% zoom appearance */
+    .cnt-box { 
+        width: 100%;
+        max-width: 1200px; /* Reduced from 1400px */
+        margin: 0 auto; 
+        padding: 0 1.5rem; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        justify-content: center;
+        height: 100%;
+    }
+
+    /* Scroll snap for desktop */
+    @media (min-width: 1024px) {
+        html { 
+            scroll-snap-type: y proximity; 
+        }
+        
+        .snap-section { 
+            scroll-snap-align: start; 
+            scroll-snap-stop: normal;
+        }
+        
+        section {
+            height: auto;
+            min-height: 100vh;
+            padding-top: 6rem; /* 96px */
+            padding-bottom: 6rem;
+        }
+        
+        #home {
+            height: 100vh !important;
+        }
+    }
+
+    /* Portfolio carousel styles */
+    #portfolio-carousel {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge */
+    }
+    
+    #portfolio-carousel::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+
+    /* Active dot state */
+    .carousel-dot.active {
+        width: 1.5rem; /* 24px */
+        background-color: rgb(16 185 129); /* accent-primary */
+    }
+</style>
+
+<script>
+    // Portfolio carousel logic
+    const carousel = document.getElementById('portfolio-carousel');
+    const prevBtn = document.getElementById('carousel-prev');
+    const nextBtn = document.getElementById('carousel-next');
+    const dots = document.querySelectorAll('.carousel-dot');
+    const cards = document.querySelectorAll('.portfolio-card');
+    
+    let currentIndex = 0;
+    const totalCards = cards.length;
+
+    // Update dot indicators
+    function updateDots(index: number) {
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+    }
+
+    // Update button states
+    function updateButtons() {
+        if (prevBtn) prevBtn.disabled = currentIndex === 0;
+        if (nextBtn) nextBtn.disabled = currentIndex === totalCards - 1;
+    }
+
+    // Scroll to specific card (desktop behavior)
+    function scrollToCard(index: number) {
+        if (!carousel || index < 0 || index >= totalCards) return;
+        
+        const card = cards[index] as HTMLElement;
+        if (!card) return;
+
+        // On desktop, scroll the card into view within the container
+        if (window.innerWidth >= 1024) {
+            const scrollAmount = card.offsetLeft - (carousel.offsetWidth - card.offsetWidth) / 2;
+            carousel.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+        }
+        
+        currentIndex = index;
+        updateDots(currentIndex);
+        updateButtons();
+    }
+
+    // Button click handlers
+    prevBtn?.addEventListener('click', () => {
+        scrollToCard(currentIndex - 1);
+    });
+
+    nextBtn?.addEventListener('click', () => {
+        scrollToCard(currentIndex + 1);
+    });
+
+    // Dot click handlers
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            scrollToCard(index);
+        });
+    });
+
+    // Mobile: detect scroll position for dot updates
+    carousel?.addEventListener('scroll', () => {
+        if (window.innerWidth >= 1024) return; // Skip on desktop
+        
+        const scrollLeft = carousel.scrollLeft;
+        const cardWidth = cards[0]?.clientWidth || 0;
+        const gap = 24; // 1.5rem gap
+        
+        const newIndex = Math.round(scrollLeft / (cardWidth + gap));
+        if (newIndex !== currentIndex && newIndex >= 0 && newIndex < totalCards) {
+            currentIndex = newIndex;
+            updateDots(currentIndex);
+        }
+    }, { passive: true });
+
+    // Initial state
+    updateDots(0);
+    updateButtons();
+</script>

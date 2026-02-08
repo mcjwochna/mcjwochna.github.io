@@ -1,0 +1,222 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+
+export async function getStaticPaths() {
+  const workEntries = await getCollection('work');
+  return workEntries.map(entry => ({
+    params: { slug: entry.slug }, 
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { 
+  title, 
+  summary, 
+  tags, 
+  image,
+  context, 
+  problem, 
+  constraints, 
+  decisions, 
+  outcome, 
+  lessons,
+  embedUrl 
+} = entry.data;
+
+const hasValidEmbed = embedUrl && !embedUrl.includes('PLACEHOLDER');
+const heroImage = image || '/profile.jpg';
+---
+
+<MainLayout title={`${title} | Maciej Wochna`}>
+  
+  <!-- SEKCJA 1: HERO -->
+  <section class="relative min-h-[50vh] bg-bg-primary overflow-hidden">
+    <div 
+      class="absolute inset-0 bg-cover bg-center lg:bg-right lg:w-[65%] lg:left-[35%] lg:[clip-path:polygon(12%_0,100%_0,100%_100%,0%_100%)]"
+      style={`background-image: url('${heroImage}');`}
+    >
+      <div class="absolute inset-0 bg-black/60 lg:bg-black/30"></div>
+    </div>
+    
+    <div class="relative h-full min-h-[50vh] flex flex-col justify-end lg:justify-center px-6 lg:pl-24 pb-12 pt-28 lg:pt-24 z-30 lg:w-[60%]">
+      
+      <a 
+        href="/#portfolio" 
+        class="inline-flex items-center gap-3 text-white lg:text-text-primary hover:text-accent-primary transition-colors mb-8 group w-fit"
+      >
+        <span class="w-8 h-8 rounded-full border border-current flex items-center justify-center group-hover:bg-accent-primary group-hover:border-accent-primary group-hover:text-white transition-all">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </span>
+        <span class="font-mono text-sm uppercase tracking-widest">Back to Work</span>
+      </a>
+      
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter uppercase mb-6 max-w-3xl text-white lg:text-text-primary">
+        {title}
+      </h1>
+      
+      <p class="text-lg text-white/80 lg:text-text-secondary leading-relaxed max-w-2xl mb-8">
+        {summary}
+      </p>
+      
+      <div class="flex flex-wrap gap-2">
+        {tags.map(tag => (
+          <span class="text-xs font-bold uppercase tracking-widest px-3 py-1.5 border border-accent-primary/50 text-accent-primary rounded-full bg-black/20 lg:bg-transparent">
+            {tag}
+          </span>
+        ))}
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- SEKCJA 2: CASE STUDY -->
+  <section class="bg-bg-secondary py-16">
+    <div class="max-w-[1400px] mx-auto px-6">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+        <div>
+          <div class="flex items-center gap-4 mb-6">
+            <span class="text-accent-primary font-mono text-sm">01. Context</span>
+            <div class="h-[1px] bg-white/10 flex-1"></div>
+          </div>
+          <p class="text-text-secondary leading-relaxed">{context}</p>
+        </div>
+        
+        <div>
+          <div class="flex items-center gap-4 mb-6">
+            <span class="text-accent-primary font-mono text-sm">02. Problem</span>
+            <div class="h-[1px] bg-white/10 flex-1"></div>
+          </div>
+          <p class="text-text-secondary leading-relaxed">{problem}</p>
+        </div>
+      </div>
+      
+      <div class="mb-16">
+        <div class="flex items-center gap-4 mb-8">
+          <span class="text-accent-primary font-mono text-sm">03. Constraints</span>
+          <div class="h-[1px] bg-white/10 flex-1"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {constraints.map((constraint, index) => (
+            <div class="flex items-start gap-4 p-5 bg-bg-primary/50 rounded-xl border border-white/5">
+              <span class="text-accent-primary/50 font-bold text-sm">{String(index + 1).padStart(2, '0')}</span>
+              <p class="text-text-secondary text-sm leading-relaxed">{constraint}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <div class="mb-16">
+        <div class="flex items-center gap-4 mb-8">
+          <span class="text-accent-primary font-mono text-sm">04. Key Decisions</span>
+          <div class="h-[1px] bg-white/10 flex-1"></div>
+        </div>
+        <div class="space-y-6">
+          {decisions.map((decision, index) => (
+            <div class="flex items-start gap-6 p-6 bg-bg-primary/30 rounded-xl border border-white/5">
+              <span class="text-accent-primary/30 font-black text-3xl leading-none">{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <h3 class="text-lg font-bold mb-2">{decision.title}</h3>
+                <p class="text-text-secondary text-sm leading-relaxed">{decision.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <div class="mb-16">
+        <div class="flex items-center gap-4 mb-8">
+          <span class="text-accent-primary font-mono text-sm">05. Outcome</span>
+          <div class="h-[1px] bg-white/10 flex-1"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {outcome.map((item) => (
+            <div class="p-6 bg-bg-primary/50 rounded-xl border border-white/5 hover:border-accent-primary/30 transition-colors">
+              <span class="text-accent-primary mb-3 block">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                </svg>
+              </span>
+              <p class="text-text-secondary text-sm leading-relaxed">{item}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      {lessons && (
+        <div>
+          <div class="flex items-center gap-4 mb-8">
+            <span class="text-accent-primary font-mono text-sm">06. Lessons Learned</span>
+            <div class="h-[1px] bg-white/10 flex-1"></div>
+          </div>
+          <blockquote class="text-xl font-light italic text-text-secondary leading-relaxed border-l-4 border-accent-primary pl-6 max-w-3xl">
+            "{lessons}"
+          </blockquote>
+        </div>
+      )}
+      
+    </div>
+  </section>
+  
+  <!-- SEKCJA 3: NAWIGACJA + LIVE DASHBOARD -->
+  <section class="bg-bg-primary py-16">
+    <div class="max-w-[1400px] mx-auto px-6">
+      
+      <!-- NAWIGACJA - NA GÓRZE SEKCJI -->
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-6 mb-16">
+        <a 
+          href="/#portfolio" 
+          class="inline-flex items-center gap-3 text-text-secondary hover:text-accent-primary transition-colors group"
+        >
+          <span class="w-10 h-10 rounded-full border border-current flex items-center justify-center group-hover:bg-accent-primary group-hover:border-accent-primary group-hover:text-white transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </span>
+          <span class="font-bold uppercase tracking-widest text-sm">All Projects</span>
+        </a>
+        
+        <a 
+          href="/#contact" 
+          class="inline-flex items-center gap-3 px-6 py-3 bg-accent-primary text-white rounded-full font-bold uppercase tracking-widest text-sm hover:bg-accent-primary/90 transition-all"
+        >
+          Start a Project
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- LIVE DASHBOARD (warunkowy) -->
+      {hasValidEmbed && (
+        <div>
+          <div class="flex items-center gap-4 mb-8">
+            <span class="text-accent-primary font-mono text-sm">07. Live Dashboard</span>
+            <div class="h-[1px] bg-gray-800 flex-1"></div>
+          </div>
+          
+          <div class="relative group">
+            <div class="absolute -inset-1 bg-gradient-to-r from-accent-primary/20 to-blue-600/20 rounded-2xl blur-xl opacity-50 group-hover:opacity-100 transition duration-500"></div>
+            <div class="relative rounded-xl overflow-hidden border border-white/10 bg-gray-900 shadow-2xl">
+              <div class="h-10 bg-black/40 backdrop-blur-sm border-b border-white/5 flex items-center px-4 gap-2">
+                <div class="w-3 h-3 rounded-full bg-white/20"></div>
+                <div class="w-3 h-3 rounded-full bg-white/20"></div>
+                <div class="w-3 h-3 rounded-full bg-white/20"></div>
+                <span class="ml-3 text-[10px] text-white/40 font-mono uppercase tracking-widest">Power BI — Interactive Report</span>
+              </div>
+              <div class="w-full h-[600px] lg:h-[700px]">
+                <iframe title={title} class="w-full h-full" src={embedUrl} frameborder="0" allowFullScreen={true}></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
+    </div>
+  </section>
+
+</MainLayout>
