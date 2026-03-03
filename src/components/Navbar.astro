@@ -164,8 +164,10 @@
         observer.observe(section);
     });
 
-    // Set initial active state based on hash or default to home
-    const initialSection = window.location.hash.slice(1) || 'home';
+    // Set initial active state based on path/hash
+    const path = window.location.pathname;
+    const hash = window.location.hash.slice(1);
+    const initialSection = path.startsWith('/work/') ? 'portfolio' : (hash || 'home');
     const initialLink = document.querySelector(`.nav-link[data-section="${initialSection}"]`);
     initialLink?.classList.add('active');
 </script>
