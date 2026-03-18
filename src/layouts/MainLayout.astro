@@ -37,6 +37,27 @@ const schema = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Security: Content Security Policy -->
+    <!-- Allows scripts/styles only from this domain + inline (required for dark-mode & JSON-LD). -->
+    <!-- Blocks ALL external scripts — the primary vector for crypto-mining injection.           -->
+    <!-- object-src 'none' blocks Flash/plugins; base-uri 'self' blocks base-tag injection.     -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data: blob:;
+        frame-src https://app.powerbi.com;
+        connect-src 'self' https://in2data.pl;
+        font-src 'self';
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self' https://in2data.pl;
+        upgrade-insecure-requests;
+    " />
+
+    <!-- Security: Referrer policy — don't leak full URL to external sites -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
     <!-- Performance: preconnect to external origins -->
     <link rel="preconnect" href="https://in2data.pl" />
     <link rel="dns-prefetch" href="https://app.powerbi.com" />
