@@ -1,12 +1,13 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import MainLayout from '../../layouts/MainLayout.astro';
 import { SITE } from '../../data/site';
+import SlantedHeroImage from '../../components/SlantedHeroImage.astro';
 
 export async function getStaticPaths() {
   const workEntries = await getCollection('work');
   return workEntries.map(entry => ({
-    params: { slug: entry.slug },
+    params: { slug: entry.id },
     props: { entry },
   }));
 }
@@ -17,6 +18,7 @@ const {
   summary,
   tags,
   image,
+  imageAlt,
   context,
   problem,
   constraints,
@@ -26,9 +28,8 @@ const {
   embedUrl,
 } = entry.data;
 
-const hasValidEmbed = embedUrl && !embedUrl.includes('PLACEHOLDER');
-const heroImage = image || '/profile.jpg';
-const pageUrl = new URL(`/work/${entry.slug}`, SITE.url).toString();
+const { Content } = await render(entry);
+const pageUrl = new URL(`/work/${entry.id}/`, SITE.url).toString();
 
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
@@ -58,19 +59,10 @@ const breadcrumbSchema = {
 
 <MainLayout title={`${title} | ${SITE.name}`} description={summary}>
 
-  <!-- BreadcrumbList structured data -->
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
-  <!-- HERO -->
   <section class="relative min-h-[50vh] bg-bg-primary overflow-hidden">
-    <div
-      class="absolute inset-0 bg-cover bg-center lg:bg-right lg:w-[65%] lg:left-[35%] lg:[clip-path:polygon(12%_0,100%_0,100%_100%,0%_100%)]"
-      style={`background-image: url('${heroImage}');`}
-      role="img"
-      aria-label={`${title} — case study cover image`}
-    >
-      <div class="absolute inset-0 bg-black/60 lg:bg-black/30"></div>
-    </div>
+    <SlantedHeroImage image={image} alt={imageAlt} overlayClass="bg-black/60 lg:bg-black/30" isLcp />
 
     <div class="relative h-full min-h-[50vh] flex flex-col justify-end lg:justify-center px-6 lg:pl-24 pb-12 pt-28 lg:pt-24 z-30 lg:w-[60%]">
 
@@ -105,7 +97,6 @@ const breadcrumbSchema = {
     </div>
   </section>
 
-  <!-- CASE STUDY -->
   <section class="bg-bg-secondary py-16">
     <div class="cnt-box">
 
@@ -179,10 +170,20 @@ const breadcrumbSchema = {
         </div>
       </div>
 
+      <div class="mb-16">
+        <div class="flex items-center gap-4 mb-8">
+          <span class="text-accent-primary font-mono text-sm">06. Deep Dive</span>
+          <div class="h-[1px] bg-white/10 flex-1"></div>
+        </div>
+        <article class="prose dark:prose-invert max-w-none prose-headings:text-text-primary prose-p:text-text-secondary prose-li:text-text-secondary prose-a:text-accent-primary">
+          <Content />
+        </article>
+      </div>
+
       {lessons && (
         <div>
           <div class="flex items-center gap-4 mb-8">
-            <span class="text-accent-primary font-mono text-sm">06. Lessons Learned</span>
+            <span class="text-accent-primary font-mono text-sm">07. Lessons Learned</span>
             <div class="h-[1px] bg-white/10 flex-1"></div>
           </div>
           <blockquote class="text-xl font-light italic text-text-secondary leading-relaxed border-l-4 border-accent-primary pl-6 max-w-3xl">
@@ -194,7 +195,6 @@ const breadcrumbSchema = {
     </div>
   </section>
 
-  <!-- NAVIGATION + LIVE DASHBOARD -->
   <section class="bg-bg-primary py-16">
     <div class="cnt-box">
 
@@ -222,17 +222,17 @@ const breadcrumbSchema = {
         </a>
       </div>
 
-      {hasValidEmbed && (
+      {embedUrl && (
         <div>
           <div class="flex items-center gap-4 mb-8">
-            <span class="text-accent-primary font-mono text-sm">07. Live Dashboard</span>
+            <span class="text-accent-primary font-mono text-sm">08. Live Dashboard</span>
             <div class="h-[1px] bg-gray-800 flex-1"></div>
           </div>
 
           <div class="relative group">
-            <div class="absolute -inset-1 bg-gradient-to-r from-accent-primary/20 to-blue-600/20 rounded-2xl blur-xl opacity-50 group-hover:opacity-100 transition duration-500" aria-hidden="true"></div>
+            <div class="absolute -inset-1 bg-linear-to-r from-accent-primary/20 to-blue-600/20 rounded-2xl blur-xl opacity-50 group-hover:opacity-100 transition duration-500" aria-hidden="true"></div>
             <div class="relative rounded-xl overflow-hidden border border-white/10 bg-gray-900 shadow-2xl">
-              <div class="h-10 bg-black/40 backdrop-blur-sm border-b border-white/5 flex items-center px-4 gap-2" aria-hidden="true">
+              <div class="h-10 bg-black/40 backdrop-blur-xs border-b border-white/5 flex items-center px-4 gap-2" aria-hidden="true">
                 <div class="w-3 h-3 rounded-full bg-white/20"></div>
                 <div class="w-3 h-3 rounded-full bg-white/20"></div>
                 <div class="w-3 h-3 rounded-full bg-white/20"></div>
@@ -257,9 +257,3 @@ const breadcrumbSchema = {
 
 </MainLayout>
 
-<style is:global>
-  /* Ensure cnt-box fills the width on case study sections */
-  .cnt-box {
-    align-items: stretch;
-  }
-</style>

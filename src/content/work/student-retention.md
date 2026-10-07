@@ -2,7 +2,8 @@
 title: "Interactive BI Portfolio Dashboard"
 summary: "My first fully independent, end-to-end Power BI project demonstrating data modeling, ETL, DAX, and UX/UI design principles."
 tags: ["Power BI", "Data Modeling", "DAX", "ETL", "UX/UI"]
-image: "/work/student-retention.jpg"
+image: "../../assets/portrait.png"
+imageAlt: "Maciej Wochna portrait"
 priority: 1
 
 context: "This is my interactive CV—a comprehensive BI project I built from scratch to demonstrate proficiency across the entire data analytics workflow: from raw data to polished, user-friendly dashboard."

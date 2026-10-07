@@ -1,7 +1,10 @@
 ---
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
+import { getImage } from 'astro:assets';
 import { SITE } from '../data/site';
+import portrait from '../assets/portrait.png';
+import { THEME_INIT_SCRIPT } from '../scripts/theme-init.mjs';
 
 interface Props {
   title?: string;
@@ -14,6 +17,8 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, SITE.url);
+const ogImage = await getImage({ src: portrait, width: 1200, height: 630, fit: 'cover', position: 'top', format: 'jpeg' });
+const ogImageURL = new URL(ogImage.src, SITE.url);
 
 const schema = {
   '@context': 'https://schema.org',
@@ -37,78 +42,46 @@ const schema = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Security: Content Security Policy -->
-    <!-- Allows scripts/styles only from this domain + inline (required for dark-mode & JSON-LD). -->
-    <!-- Blocks ALL external scripts — the primary vector for crypto-mining injection.           -->
-    <!-- object-src 'none' blocks Flash/plugins; base-uri 'self' blocks base-tag injection.     -->
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self';
-        script-src 'self' 'unsafe-inline';
-        style-src 'self' 'unsafe-inline';
-        img-src 'self' data: blob:;
-        frame-src https://app.powerbi.com;
-        connect-src 'self' https://in2data.pl;
-        font-src 'self';
-        object-src 'none';
-        base-uri 'self';
-        form-action 'self' https://in2data.pl;
-        upgrade-insecure-requests;
-    " />
-
-    <!-- Security: Referrer policy — don't leak full URL to external sites -->
     <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-    <!-- Performance: preconnect to external origins -->
     <link rel="preconnect" href="https://in2data.pl" />
     <link rel="dns-prefetch" href="https://app.powerbi.com" />
 
-    <!-- Primary Meta Tags -->
     <title>{title}</title>
-    <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="author" content={SITE.name} />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalURL} />
 
-    <!-- Theme color for browser chrome -->
     <meta name="theme-color" content="#10b981" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
 
-    <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(SITE.ogImage, SITE.url)} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content={`${SITE.name} - Data Engineer Portfolio`} />
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content={canonicalURL} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={new URL(SITE.ogImage, SITE.url)} />
+    <meta name="twitter:image" content={ogImageURL} />
 
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Structured Data (Schema.org) -->
     <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
 
-    <!-- Dark mode: applied before render to prevent flash of wrong theme -->
-    <script is:inline>
-        const theme = localStorage.getItem('theme') ??
-            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        document.documentElement.classList.toggle('dark', theme === 'dark');
-        localStorage.setItem('theme', theme);
-    </script>
+    <script is:inline set:html={THEME_INIT_SCRIPT} />
 </head>
 <body class="bg-bg-primary text-text-primary antialiased overflow-x-hidden flex flex-col min-h-screen transition-colors duration-300 selection:bg-accent-primary selection:text-white">
 
     <Navbar />
 
-    <main class="flex-grow">
+    <main class="grow">
         <slot />
     </main>
 </body>

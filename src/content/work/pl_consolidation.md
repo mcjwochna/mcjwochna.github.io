@@ -2,7 +2,8 @@
 title: "Multi-Entity P&L Consolidation"
 summary: "Consolidated fragmented financial reporting across multiple business entities into a single source of truth for executive decision-making."
 tags: ["Power BI", "DAX", "Financial Reporting", "Data Mapping"]
-image: "/work/pl_consolidation.jpg"
+image: "../../assets/portrait-at-work.png"
+imageAlt: "Maciej Wochna at work"
 priority: 2
 
 context: "A company with multiple business entities relied on dozens of separate reports for financial analysis. Each entity used different account structures, naming conventions, and reporting formats."
@@ -27,8 +28,6 @@ outcome:
   - "Enabled month-over-month and entity-vs-entity comparison for the first time"
 
 lessons: "Focus on what you control. Time spent fighting for SQL access was time not spent optimizing DAX measures and refining the mapping logic. Constraints are fixed; your response to them isn't."
-
-embedUrl: "PLACEHOLDER_POWER_BI_EMBED_URL"
 ---
 
 ## The Challenge

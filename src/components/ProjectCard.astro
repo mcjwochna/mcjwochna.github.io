@@ -1,39 +1,38 @@
 ---
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+
+interface Props {
+    project: CollectionEntry<'work'>;
+}
+
 const { project } = Astro.props;
-const { title, tags, image, summary } = project.data;
-const { slug } = project;
-const imagePath = image || '/profile.jpg';
+const { title, tags, image, imageAlt, summary } = project.data;
 ---
-<a 
-    href={`/work/${slug}`} 
+<a
+    href={`/work/${project.id}/`}
     class="group relative block w-full h-full overflow-hidden rounded-[2rem] bg-bg-secondary transition-all duration-700 hover:shadow-[0_20px_60px_rgba(16,185,129,0.2)]"
 >
-    <!-- Background image -->
-    <div 
-        class="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-out scale-100 grayscale opacity-50 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100"
-        style={`background-image: url(${imagePath});`}
-    ></div>
-    
-    <!-- Gradient overlay -->
-    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-    
-    <!-- Content -->
+    <Image
+        src={image}
+        alt={imageAlt}
+        widths={[400, 800]}
+        sizes="(min-width: 1024px) 33vw, 85vw"
+        class="absolute inset-0 h-full w-full object-cover transition-all duration-700 ease-out scale-100 grayscale opacity-50 group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100"
+    />
+
+    <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"></div>
+
     <div class="absolute inset-0 p-8 flex flex-col justify-end z-10">
         <div class="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-            
-            <!-- Summary (pojawia się na hover) -->
-            {summary && (
-                <p class="text-white/80 text-sm mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75 line-clamp-2">
-                    {summary}
-                </p>
-            )}
-            
-            <!-- Title -->
-            <h3 class="text-white text-xl lg:text-2xl font-black uppercase leading-tight mb-3">{title}</h3>
-            
-            <!-- Tags -->
+            <p class="text-white/80 text-sm mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75 line-clamp-2">
+                {summary}
+            </p>
+
+            <h3 class="text-white text-xl lg:text-2xl font-black uppercase leading-tight lg:leading-8 mb-3">{title}</h3>
+
             <div class="flex flex-wrap gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-150">
-                {tags?.slice(0, 3).map((tag) => (
+                {tags.slice(0, 3).map((tag) => (
                     <span class="text-[10px] font-bold text-white bg-accent-primary px-3 py-1 rounded-full uppercase tracking-wide">{tag}</span>
                 ))}
             </div>

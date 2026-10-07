@@ -1,77 +1,62 @@
 ---
 import { SITE } from '../data/site';
+import SlantedHeroImage from './SlantedHeroImage.astro';
+import portrait from '../assets/portrait.png';
+import portraitAtWork from '../assets/portrait-at-work.png';
+
+const slides = [
+    {
+        image: portrait,
+        imageAlt: 'Maciej Wochna — Data Engineer portrait',
+        headingLines: ['Data Engineer', '& BI Developer'],
+        contentWidth: 'lg:w-[60%]',
+    },
+    {
+        image: portraitAtWork,
+        imageAlt: 'Maciej Wochna — Data Engineer at work',
+        headingLines: ['I transform data and', 'create meaningful reports.'],
+        contentWidth: 'lg:w-[70%]',
+    },
+];
 ---
 <section
     id="home"
     class="relative h-[100dvh] w-full overflow-hidden bg-bg-primary transition-colors duration-500 snap-section"
     aria-label="Introduction"
 >
-    <!-- Live region announces current slide to screen readers -->
     <p id="slide-status" class="sr-only" aria-live="polite" aria-atomic="true">Slide 1 of 2</p>
 
     <div id="slider-track" class="h-full w-full relative">
 
-        <div class="slide absolute inset-0 opacity-100 transition-opacity duration-1000 z-10" data-active>
-            <div
-                class="absolute inset-0 bg-cover bg-center lg:bg-right lg:w-[65%] lg:left-[35%] lg:[clip-path:polygon(12%_0,100%_0,100%_100%,0%_100%)]"
-                style="background-image: url('/profile.jpg');"
-                role="img"
-                aria-label="Maciej Wochna — Data Engineer portrait"
-            >
-                <div class="absolute inset-0 bg-black/50 lg:bg-black/10 transition-all"></div>
-            </div>
+        {slides.map((slide, index) => {
+            const isFirst = index === 0;
+            const Heading = isFirst ? 'h1' : 'h2';
+            return (
+                <div class:list={['slide absolute inset-0 transition-opacity duration-1000 z-10', isFirst ? 'opacity-100' : 'opacity-0 pointer-events-none']}>
+                    <SlantedHeroImage image={slide.image} alt={slide.imageAlt} overlayClass="bg-black/50 lg:bg-black/10" isLcp={isFirst} />
 
-            <div class="relative h-full flex flex-col justify-end lg:justify-center items-center lg:items-start px-6 lg:pl-24 pb-32 lg:pb-0 z-30 lg:w-[60%] text-center lg:text-left">
-                <div class="bg-black/40 lg:bg-transparent p-6 rounded-2xl backdrop-blur-sm lg:backdrop-blur-none mb-8 lg:mb-0 max-w-[90%] lg:max-w-none">
-                    <span class="text-accent-primary font-bold tracking-[4px] uppercase mb-4 text-xs lg:text-sm block animate-fade-in">
-                        Hi! I'm Maciej
-                    </span>
-                    <h1 class="text-3xl lg:text-5xl font-black mb-8 leading-tight uppercase text-white lg:text-text-primary transition-colors tracking-tighter animate-slide-up">
-                        Data Engineer <br> & BI Developer
-                    </h1>
+                    <div class:list={['relative h-full flex flex-col justify-end lg:justify-center items-center lg:items-start px-6 lg:pl-24 pb-32 lg:pb-0 z-30 text-center lg:text-left', slide.contentWidth]}>
+                        <div class="bg-black/40 lg:bg-transparent p-6 rounded-2xl backdrop-blur-xs lg:backdrop-blur-none mb-8 lg:mb-0 max-w-[90%] lg:max-w-none">
+                            <span class:list={['text-accent-primary font-bold tracking-[4px] uppercase mb-4 text-xs lg:text-sm block', { 'animate-fade-in': isFirst }]}>
+                                Hi! I'm Maciej
+                            </span>
+                            <Heading class:list={['text-3xl lg:text-5xl font-black mb-8 leading-tight lg:leading-none uppercase text-white lg:text-text-primary transition-colors tracking-tighter', { 'animate-slide-up': isFirst }]}>
+                                {slide.headingLines[0]} <br> {slide.headingLines[1]}
+                            </Heading>
+                        </div>
+
+                        <div class:list={['flex flex-col sm:flex-row gap-4 w-full sm:w-auto', { 'animate-fade-in-delay': isFirst }]}>
+                            <a href="#contact" class="px-10 py-4 bg-accent-primary text-white rounded-full font-bold uppercase tracking-widest text-center shadow-lg hover:bg-accent-primary/90 transition-all">
+                                Hire Me
+                            </a>
+                            <a href={SITE.cv} download class="px-10 py-4 border-2 border-accent-primary text-accent-primary rounded-full font-bold uppercase tracking-widest text-center bg-bg-primary/20 lg:bg-transparent hover:bg-accent-primary hover:text-white transition-all">
+                                Download CV
+                            </a>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto animate-fade-in-delay">
-                    <a href="#contact" class="px-10 py-4 bg-accent-primary text-white rounded-full font-bold uppercase tracking-widest text-center shadow-lg hover:bg-opacity-90 transition-all">
-                        Hire Me
-                    </a>
-                    <a href={SITE.cv} download class="px-10 py-4 border-2 border-accent-primary text-accent-primary rounded-full font-bold uppercase tracking-widest text-center bg-bg-primary/20 lg:bg-transparent hover:bg-accent-primary hover:text-white transition-all">
-                        Download CV
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="slide absolute inset-0 opacity-0 transition-opacity duration-1000 z-10 pointer-events-none">
-            <div
-                class="absolute inset-0 bg-cover bg-center lg:bg-right lg:w-[65%] lg:left-[35%] lg:[clip-path:polygon(12%_0,100%_0,100%_100%,0%_100%)]"
-                style="background-image: url('/profile2.jpg');"
-                role="img"
-                aria-label="Maciej Wochna — Data Engineer at work"
-            >
-                <div class="absolute inset-0 bg-black/50 lg:bg-black/10 transition-all"></div>
-            </div>
-
-            <div class="relative h-full flex flex-col justify-end lg:justify-center items-center lg:items-start px-6 lg:pl-24 pb-32 lg:pb-0 z-30 lg:w-[70%] text-center lg:text-left">
-                <div class="bg-black/40 lg:bg-transparent p-6 rounded-2xl backdrop-blur-sm lg:backdrop-blur-none mb-8 lg:mb-0 max-w-[90%] lg:max-w-none">
-                    <span class="text-accent-primary font-bold tracking-[4px] uppercase mb-4 text-xs lg:text-sm block">
-                        Hi! I'm Maciej
-                    </span>
-                    <h2 class="text-3xl lg:text-5xl font-black mb-8 leading-tight uppercase text-white lg:text-text-primary transition-colors tracking-tighter">
-                        I transform data and <br> create meaningful reports.
-                    </h2>
-                </div>
-
-                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                    <a href="#contact" class="px-10 py-4 bg-accent-primary text-white rounded-full font-bold uppercase tracking-widest text-center shadow-lg hover:bg-opacity-90 transition-all">
-                        Hire Me
-                    </a>
-                    <a href={SITE.cv} download class="px-10 py-4 border-2 border-accent-primary text-accent-primary rounded-full font-bold uppercase tracking-widest text-center bg-bg-primary/20 lg:bg-transparent hover:bg-accent-primary hover:text-white transition-all">
-                        Download CV
-                    </a>
-                </div>
-            </div>
-        </div>
+            );
+        })}
     </div>
 
     <button id="prev-slide" class="absolute left-4 top-1/2 -translate-y-1/2 z-50 w-12 h-12 flex items-center justify-center border border-white/30 text-white hover:bg-accent-primary rounded-full transition-all bg-black/10 backdrop-blur-md" aria-label="Previous slide">
@@ -100,7 +85,7 @@ import { SITE } from '../data/site';
     let currentSlide = 0;
 
     function updateSlider(newIndex: number): void {
-        slides.forEach((slide: HTMLElement, i: number) => {
+        slides.forEach((slide, i) => {
             const isCurrent = i === newIndex;
             slide.classList.toggle('opacity-100', isCurrent);
             slide.classList.toggle('opacity-0', !isCurrent);
@@ -109,8 +94,8 @@ import { SITE } from '../data/site';
             if (isCurrent) {
                 slide.querySelectorAll('[class*="animate-"]').forEach(node => {
                     const el = node as HTMLElement;
-                    el.style.animation = '';
-                    void el.offsetHeight; // trigger reflow to restart animation
+                    el.style.animation = 'none';
+                    void el.offsetHeight; // forces reflow so the cleared animation restarts
                     el.style.animation = '';
                 });
             }

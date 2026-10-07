@@ -1,16 +1,17 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
 
-const workCollection = defineCollection({
-    type: 'content',
-    schema: z.object({
-        // Core metadata
+const work = defineCollection({
+    loader: glob({ pattern: '**/*.md', base: './src/content/work' }),
+    schema: ({ image }) => z.object({
         title: z.string(),
         summary: z.string(),
         tags: z.array(z.string()),
-        image: z.string().optional(),
+        image: image(),
+        imageAlt: z.string(),
         priority: z.number().default(99),
-        
-        // Case study structure
+
         context: z.string(),
         problem: z.string(),
         constraints: z.array(z.string()),
@@ -20,12 +21,9 @@ const workCollection = defineCollection({
         })),
         outcome: z.array(z.string()),
         lessons: z.string().optional(),
-        
-        // Power BI embed
-        embedUrl: z.string().optional(),
+
+        embedUrl: z.url().optional(),
     }),
 });
 
-export const collections = {
-    work: workCollection,
-};
+export const collections = { work };

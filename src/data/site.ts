@@ -1,11 +1,6 @@
-/**
- * Single source of truth for all site-wide configuration.
- * Import from here instead of hardcoding values across components.
- */
 export const SITE = {
   name: 'Maciej Wochna',
   url: 'https://maciejwochna.pl',
-  ogImage: '/og-image.jpg',
   cv: '/maciej_wochna_bi_consultant.pdf',
 
   contact: {
